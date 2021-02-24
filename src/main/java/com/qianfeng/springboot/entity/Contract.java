@@ -1,5 +1,7 @@
 package com.qianfeng.springboot.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -11,7 +13,9 @@ public class Contract {
     private String contractName;
     private Integer customerId;
     private double contractPrice;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
     private String customerSign;//客户签约人
     private Integer companySignId;//公司签约人

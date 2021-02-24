@@ -9,8 +9,12 @@ import com.qianfeng.springboot.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 @Service
@@ -20,7 +24,14 @@ public class ContractServiceImpl implements ContractService {
     private ContractMapper contractMapper;
 
     @Override
-    public void addContract(Contract contract) {
+    public void addContract(Contract contract, MultipartFile file) {
+        String filePath = "C:\\Users\\Animal\\Code\\log\\"+file.getOriginalFilename()+UUID.randomUUID().toString()+".jpg";
+        try {
+            file.transferTo(new File(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        contract.setFilePath(filePath);
         contractMapper.addContract(contract);
     }
 

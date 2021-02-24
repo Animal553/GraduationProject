@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.websocket.server.PathParam;
+import java.io.File;
 
 @RestController
 public class ContractController {
@@ -19,16 +23,15 @@ public class ContractController {
     @Autowired
     private ContractService contractService;
 
-    @RequiresAuthentication
     @PostMapping("/addContract")
-    public Result addContract(Contract contract){
+    public Result addContract(Contract contract,@PathParam("file") MultipartFile file){
         Result result = null;
         Message message = null;
 
         try{
             result = new Result();
             message = new Message(MyEnum.OK);
-            contractService.addContract(contract);
+            contractService.addContract(contract,file);
             result.setMessage(message);
             result.setData(contract.getContractId());
         }catch (Exception e){
@@ -61,7 +64,6 @@ public class ContractController {
     public Result updateContract(Contract contract){
         Result result = null;
         Message message = null;
-
         try{
             result = new Result();
             message = new Message(MyEnum.OK);
