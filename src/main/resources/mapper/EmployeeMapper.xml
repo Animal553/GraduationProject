@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.springboot.mapper.EmployeeMapper">
+    <insert id="addEmployee" parameterType="employee">
+        INSERT INTO employee(emp_name,age,dept_id,hire_date,update_time,email,password,portrait,info)VALUES
+        (#{empName},#{age},#{deptId},#{hireDate},#{updateTime},#{email},#{password},#{portrait},#{info})
+    </insert>
+
+    <delete id="deleteEmployee" parameterType="int">
+        DELETE FROM employee WHERE emp_id =#{empId}
+    </delete>
+
+    <update id="updateEmployee" parameterType="employee">
+        UPDATE employee
+        <set>
+            <if test="empName!=null">emp_name =#{empName},</if>
+            <if test="age!=null">age =#{age},</if>
+            <if test="deptId!=null">dept_id =#{deptId},</if>
+            <if test="hireDate!=null">hire_date =#{hireDate},</if>
+            <if test="updateTime!=null">update_time =#{updateTime},</if>
+            <if test="email!=null">email =#{email},</if>
+            <if test="password!=null">password =#{password},</if>
+            <if test="portrait!=null">portrait =#{portrait},</if>
+            <if test="info!=null">info =#{info}</if>
+        </set>
+        <where>
+            emp_id =#{empId}
+        </where>
+    </update>
+
+
+    <resultMap id="empMap" type="employee">
+        <id property="empId" column="emp_id"></id>
+        <result property="empName" column="emp_name"></result>
+        <result property="age" column="age"></result>
+        <result property="deptId" column="dept_id"></result>
+        <result property="hireDate" column="hire_date"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="password" column="password"></result>
+        <result property="portrait" column="portrait"></result>
+        <result property="info" column="info"></result>
+        <association property="department" javaType="department" column="dept_id" select="com.qianfeng.springboot.mapper.DepartmentMapper.getDepartment"></association>
+    </resultMap>
+
+    <select id="getEmployeeList" resultMap="empMap">
+        SELECT * FROM employee
+    </select>
+
+    <select id="getEmployee" resultMap="empMap">
+        SELECT * FROM employee WHERE emp_id =#{empId}
+    </select>
+
+    <select id="getEmployeeByEmail" parameterType="String" resultType="employee">
+        SELECT * FROM employee WHERE email =#{email}
+    </select>
+</mapper>

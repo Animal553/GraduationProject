@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.springboot.mapper.ProductMapper">
+    <insert id="addProduct" parameterType="product">
+        INSERT INTO product(product_name,category_id,price,create_id,create_time,update_time,status)VALUES 
+        (#{productName},#{categoryId},#{price},#{createId},#{createTime},#{updateTime},#{status})
+    </insert>
+    
+    <delete id="deleteProduct" parameterType="int">
+        DELETE FROM product WHERE product_id =#{productId}
+    </delete>
+    
+    <update id="updateProduct" parameterType="product">
+        UPDATE product
+        <set>
+            <if test="productName!=null">product_name =#{productName},</if>
+            <if test="categoryId!=null">category_id =#{categoryId},</if>
+            <if test="price!=null">price =#{price},</if>
+            <if test="createId!=null">create_id =#{createId},</if>
+            <if test="createTime!=null">create_time =#{createTime},</if>
+            <if test="updateTime!=null">update_time =#{updateTime},</if>
+            <if test="status!=null">status =#{status}</if>
+        </set>
+        <where>
+            product_id =#{productId}
+        </where>
+    </update>
+    
+    <resultMap id="proMap" type="product">
+        <id property="productId" column="product_id"></id>
+        <result property="productName" column="product_name"></result>
+        <result property="categoryId" column="category_id"></result>
+        <result property="price" column="price"></result>
+        <result property="createId" column="create_id"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="status" column="status"></result>
+        <association property="category" javaType="category" column="category_id" select="com.qianfeng.springboot.mapper.CategoryMapper.getCategory"></association>
+        <association property="employee" javaType="employee" column="create_id" select="com.qianfeng.springboot.mapper.EmployeeMapper.getEmployee"></association>
+    </resultMap>
+    
+    <select id="getProductList" resultMap="proMap">
+        SELECT * FROM product
+    </select>
+    
+    <select id="getProduct" resultMap="proMap">
+        SELECT * FROM product WHERE product_id =#{productId}
+    </select>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.springboot.mapper.ContractMapper">
+
+    <insert id="addContract" parameterType="contract" useGeneratedKeys="true" keyProperty="contractId">
+        INSERT INTO contract (contract_name,customer_id,contract_price,start_time,end_time,customer_sign,company_sign_id,charge_id,approval1_id,approval2_id,status,file_path)VALUES
+        (#{contractName},#{customerId},#{contractPrice},#{startTime},#{endTime},#{customerSign},#{companySignId},#{chargeId},#{approval1Id},#{approval2Id},#{status},#{filePath})
+    </insert>
+
+    <delete id="deleteContract" parameterType="int">
+        DELETE FROM contract WHERE contract_id =#{contractId}
+    </delete>
+
+    <update id="updateContract" parameterType="contract">
+        UPDATE contract
+        <set>
+            <if test="contractName!=null">contract_name =#{contractName},</if>
+            <if test="customerId!=null">customer_id =#{customerId},</if>
+            <if test="contractPrice!=null">contract_price =#{contractPrice},</if>
+            <if test="startTime!=null">start_time =#{startTime},</if>
+            <if test="endTime!=null">end_time =#{endTime},</if>
+            <if test="customerSign!=null">customer_sign =#{customerSign},</if>
+            <if test="companySignId!=null">company_sign_id =#{companySignId},</if>
+            <if test="chargeId!=null">charge_id =#{chargeId},</if>
+            <if test="approval1Id!=null">approval1_id =#{approval1Id},</if>
+            <if test="approval2Id!=null">approval2_id =#{approval2Id},</if>
+            <if test="status!=null">status =#{status},</if>
+            <if test="filePath!=null">file_path =#{filePath},</if>
+        </set>
+        <where>
+            contract_id =#{contractId}
+        </where>
+    </update>
+
+    <resultMap id="contMap" type="contract">
+        <id property="contractId" column="contract_id"></id>
+        <result property="contractName" column="contract_name"></result>
+        <result property="customerId" column="customer_id"></result>
+        <result property="contractPrice" column="contract_price"></result>
+        <result property="startTime" column="start_time"></result>
+        <result property="endTime" column="end_time"></result>
+        <result property="customerSign" column="customer_sign"></result>
+        <result property="companySignId" column="company_sign_id"></result>
+        <result property="chargeId" column="charge_id"></result>
+        <result property="approval1Id" column="approval1_id"></result>
+        <result property="approval2Id" column="approval2_id"></result>
+        <result property="status" column="status"></result>
+        <result property="filePath" column="file_path"></result>
+        <association property="customer" javaType="customer" column="customer_id" select="com.qianfeng.springboot.mapper.CustomerMapper.getCustomer"></association>
+        <association property="companySignName" javaType="employee" column="company_sign_id" select="com.qianfeng.springboot.mapper.EmployeeMapper.getEmployee"></association>
+        <association property="chargeName" javaType="employee" column="charge_id" select="com.qianfeng.springboot.mapper.EmployeeMapper.getEmployee"></association>
+        <association property="approval1Name" javaType="employee" column="approval1_id" select="com.qianfeng.springboot.mapper.EmployeeMapper.getEmployee"></association>
+        <association property="approval2Name" javaType="employee" column="approval2_id" select="com.qianfeng.springboot.mapper.EmployeeMapper.getEmployee"></association>
+    </resultMap>
+
+    <select id="getContractList" resultMap="contMap">
+        SELECT * FROM contract
+    </select>
+
+    <select id="getContract" resultMap="contMap">
+        SELECT * FROM contract WHERE contract_id =#{contractId}
+    </select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.springboot.mapper.ContractProductMapper">
+    <insert id="addContractProduct" parameterType="contractProduct">
+        INSERT INTO contract_product(contract_id,product_id,count)VALUES (#{contractId},#{productId},#{count})
+    </insert>
+    
+    <delete id="deleteContractProduct" parameterType="int">
+        DELETE FROM contract_product WHERE cp_id =#{cpId}
+    </delete>
+
+    <update id="updateContractProduct" parameterType="contractProduct">
+        UPDATE contract_product
+        <set>
+            <if test="contractId!=null">contract_id =#{contractId},</if>
+            <if test="productId!=null">product_id =#{productId},</if>
+            <if test="count!=null">count =#{count},</if>
+        </set>
+        <where>
+            cp_id =#{cpId}
+        </where>
+    </update>
+
+    <resultMap id="conMap" type="contractProduct">
+        <id property="cpId" column="cp_id"></id>
+        <result property="contractId" column="contract_id"></result>
+        <result property="productId" column="product_id"></result>
+        <result property="count" column="count"></result>
+        <association property="contract" javaType="contract" column="contract_id" select="com.qianfeng.springboot.mapper.ContractMapper.getContract"></association>
+        <association property="product" javaType="product" column="product_id" select="com.qianfeng.springboot.mapper.ProductMapper.getProduct"></association>
+    </resultMap>
+
+    <select id="getContractProductList" resultMap="conMap">
+        SELECT * FROM contract_product
+    </select>
+
+    <select id="getContractProduct" resultMap="conMap">
+        SELECT * FROM contract_product WHERE cp_id =#{cpId}
+    </select>
+</mapper>

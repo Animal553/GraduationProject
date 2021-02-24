@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.springboot.mapper.CustomerMapper">
+
+    <insert id="addCustomer" parameterType="customer">
+        INSERT INTO customer (customer_name,phone,status,charge_id,create_id,source_id,industry_id,level_id,create_time,update_time,next_time,flg)VALUES
+        (#{customerName},#{phone},#{status},#{chargeId},#{createId},#{sourceId},#{industryId},#{levelId},#{createTime},#{updateTime},#{nextTime},#{flg})
+    </insert>
+
+    <delete id="deleteCustomer" parameterType="int">
+        DELETE FROM customer WHERE customer_id =#{customerId}
+    </delete>
+
+    <update id="updateCustomer" parameterType="customer">
+        UPDATE customer
+        <set>
+            <if test="customerName!=null">customer_name =#{customerName},</if>
+            <if test="phone!=null">phone =#{phone},</if>
+            <if test="status!=null">status =#{status},</if>
+            <if test="chargeId!=null">charge_id =#{chargeId},</if>
+            <if test="createId!=null">create_id =#{createId},</if>
+            <if test="sourceId!=null">source_id =#{sourceId},</if>
+            <if test="industryId!=null">industry_id =#{industryId},</if>
+            <if test="levelId!=null">level_id =#{levelId},</if>
+            <if test="createTime!=null">create_time =#{createTime},</if>
+            <if test="updateTime!=null">update_time =#{updateTime},</if>
+            <if test="nextTime!=null">next_time =#{nextTime},</if>
+            <if test="flg!=null">flg =#{flg}</if>
+        </set>
+        <where>
+            customer_id =#{customerId}
+        </where>
+    </update>
+
+    <resultMap id="cusMap" type="customer">
+        <id property="customerId" column="customer_id"></id>
+        <result property="customerName" column="customer_name"></result>
+        <result property="phone" column="phone"></result>
+        <result property="status" column="status"></result>
+        <result property="chargeId" column="charge_id"></result>
+        <result property="createId" column="create_id"></result>
+        <result property="sourceId" column="source_id"></result>
+        <result property="industryId" column="industry_id"></result>
+        <result property="levelId" column="level_id"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="nextTime" column="next_time"></result>
+        <result property="flg" column="flg"></result>
+        <association property="chargeName" javaType="employee" column="charge_id" select="com.qianfeng.springboot.mapper.EmployeeMapper.getEmployee"></association>
+        <association property="createName" javaType="employee" column="create_id" select="com.qianfeng.springboot.mapper.EmployeeMapper.getEmployee"></association>
+        <association property="source" javaType="source" column="source_id" select="com.qianfeng.springboot.mapper.SourceMapper.getSource"></association>
+        <association property="industry" javaType="industry" column="industry_id" select="com.qianfeng.springboot.mapper.IndustryMapper.getIndustry"></association>
+        <association property="level" javaType="level" column="level_id" select="com.qianfeng.springboot.mapper.LevelMapper.getLevel"></association>
+    </resultMap>
+
+    <select id="getCustomerList" resultMap="cusMap">
+        SELECT * FROM customer
+    </select>
+
+
+    <select id="getCustomer" resultMap="cusMap">
+        SELECT * FROM customer WHERE customer_id =#{customerId}
+    </select>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.springboot.mapper.LevelMapper">
+    <select id="getLevelList" resultType="level">
+        SELECT * FROM level
+    </select>
+    <select id="getLevel" parameterType="int" resultType="level">
+        SELECT * FROM level WHERE level_id =#{levelId}
+    </select>
+</mapper>
