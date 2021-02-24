@@ -70,6 +70,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee getEmployeeByName(String empName) {
+        Employee employee = employeeMapper.getEmployeeByName(empName);
+
+        return employee;
+    }
+
+    @Override
     public Employee getEmployeeByEmail(String email) {
         Employee employee = employeeMapper.getEmployeeByEmail(email);
         return employee;

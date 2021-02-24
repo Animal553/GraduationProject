@@ -10,5 +10,6 @@ public interface EmployeeService {
     void updateEmployee(Employee employee);
     Page getEmployeeList(Integer pageNo, Integer pageSize);
     Employee getEmployee(Integer empId);
+    Employee getEmployeeByName(String empName);
     Employee getEmployeeByEmail(String email);
 }

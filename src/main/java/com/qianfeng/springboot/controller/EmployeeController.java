@@ -109,6 +109,23 @@ public class EmployeeController {
         return result;
     }
 
+    @GetMapping("/getEmployeeByName")
+    public Result getEmployeeByName(String empName){
+        Result result = null;
+        Message message = null;
+
+        try {
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            Employee employee = employeeService.getEmployeeByName(empName);
+            result.setMessage(message);
+            result.setData(employee);
+        }catch (Exception e){
+            throw new MyException(MyEnum.SELECT_ERROR);
+        }
+        return result;
+    }
+
     @PostMapping("/login")
     public Result login(String email, String password, String rem){
         Subject subject = SecurityUtils.getSubject();

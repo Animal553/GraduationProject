@@ -599,23 +599,23 @@
     function select() {
         $("#tbody").empty();
         $("#page").empty();
-        $.getJSON("EmployeeLikeSelectServlet", {kname: kname}, function (date) {
+        $.getJSON("http://localhost:8080/getEmployeeByName", {"empName": kname}, function (date) {
             console.log(date);
-            var list = date
+            var list = new Array(date.data);
             var str = ""
-            for (var i = 0; i < date.length; i++) {
+            for (var i = 0; i < list.length; i++) {
                 str += "<tr>\r\n" +
                     "<td>" +
                     "<label class=\"lyear-checkbox checkbox-primary\">" +
-                    "<input  type=\"checkbox\" name=\"ids\" value=" + date[i].empId + " > <span></span>" +
+                    "<input  type=\"checkbox\" name=\"ids\" value=" + list[i].empId + "> <span></span>" +
                     "</label>\r\n" +
                     "</td>\r\n" +
-                    "<td >" + date[i].empId + "</td>\r\n" +
-                    "<td>" + date[i].empName + "</td>\r\n" +
-                    "<td>" + date[i].age + "</td>\r\n" +
-                    "<td>" + date[i].department.deptName + "</td>\r\n" +
-                    "<td>" + date[i].hireDate + "</td>\r\n" +
-                    "<td>" + date[i].updateTime + "</td>\r\n" +
+                    "<td>" + list[i].empId + "</td>\r\n" +
+                    "<td>" + list[i].empName + "</td>\r\n" +
+                    "<td>" + list[i].age + "</td>\r\n" +
+                    "<td>" + list[i].department.deptName + "</td>\r\n" +
+                    "<td>" + list[i].hireDate + "</td>\r\n" +
+                    "<td>" + list[i].updateTime + "</td>\r\n" +
                     "<td>\r\n" +
                     " <div class=\"btn-group\">" +
                     "	<a class=\"btn btn-xs btn-default\"  title=\"编辑\" data-toggle=\"tooltip\" href=\"http://localhost:8080/updateEmployeeList?empId=" + list[i].empId + " \"> <i class=\"mdi mdi-pencil\"></i></a>\r\n" +

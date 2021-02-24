@@ -55,4 +55,8 @@
     <select id="getEmployeeByEmail" parameterType="String" resultType="employee">
         SELECT * FROM employee WHERE email =#{email}
     </select>
+
+    <select id="getEmployeeByName" parameterType="String" resultMap="empMap">
+        SELECT * FROM employee WHERE emp_name like "%"#{empName}"%"
+    </select>
 </mapper>
