@@ -11,5 +11,7 @@ public interface CustomerMapper {
     void deleteCustomer(Integer customerId);
     void updateCustomer(Customer customer);
     List<Customer> getCustomerList();
+    List<Customer> getCustomerListByFlg(Integer flg);
     Customer getCustomer(Integer customerId);
+    void updateCustomerToFlg();
 }

@@ -110,4 +110,22 @@ public class CustomerController {
         return result;
     }
 
+    @GetMapping("/getCustomerListByFlg")
+    public Result getCustomerListByFlg(Integer pageNo, Integer pageSize,Integer flg){
+        Result result = null;
+        Message message = null;
+
+        try{
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            Page customerList = customerService.getCustomerListByFlg(pageNo, pageSize, flg);
+            result.setMessage(message);
+            result.setData(customerList);
+        }catch (Exception e){
+            throw new MyException(MyEnum.SELECT_ERROR);
+        }
+
+        return result;
+    }
+
 }

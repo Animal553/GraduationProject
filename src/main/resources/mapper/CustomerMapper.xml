@@ -60,7 +60,15 @@
     </select>
 
 
-    <select id="getCustomer" resultMap="cusMap">
+    <select id="getCustomer" parameterType="int" resultMap="cusMap">
         SELECT * FROM customer WHERE customer_id =#{customerId}
+    </select>
+
+    <update id="updateCustomerToFlg">
+        UPDATE customer SET flg = 2 WHERE next_time &lt; NOW()
+    </update>
+
+    <select id="getCustomerListByFlg" parameterType="int" resultMap="cusMap">
+        SELECT * FROM customer WHERE flg =#{flg}
     </select>
 </mapper>

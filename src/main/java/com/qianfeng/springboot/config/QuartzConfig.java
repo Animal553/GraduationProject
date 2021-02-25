@@ -12,7 +12,7 @@ public class QuartzConfig {
 
         return JobBuilder.newJob(MyJob.class)//绑定job类
                 .withIdentity("MyJob")//给起个名字
-                .usingJobData("msg","hello quartz")//关联数据,就是向JobDetail设置一个值，可以在job类中拿到
+                .usingJobData("msg","定时任务的执行...")//关联数据,就是向JobDetail设置一个值，可以在job类中拿到
                 .storeDurably()//在没有触发器的情况下不需要删除job
                 .build();
     }
@@ -20,9 +20,12 @@ public class QuartzConfig {
 
     @Bean
     public Trigger createTrigger(){
-        CronScheduleBuilder cronScheduleBuilder =CronScheduleBuilder.cronSchedule("0/1 * * * * ?");
-        return TriggerBuilder.newTrigger()
-                .forJob(createJobDetail())
+
+        //0/1 * * * * ?
+        //59 59 23 * * ?
+        CronScheduleBuilder cronScheduleBuilder =CronScheduleBuilder.cronSchedule("59 59 23 * * ?");//定时任务的设置
+        return TriggerBuilder.newTrigger()//创建新的调度器的对象
+                .forJob(createJobDetail())//绑定jobDetail
                 .withIdentity("MyJobTrigger")
                 .withSchedule(cronScheduleBuilder)//绑定定时执行的规则
                 .build();
