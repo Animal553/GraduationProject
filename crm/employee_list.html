@@ -14,6 +14,7 @@
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+    <script type="text/javascript" src="js/vue.js"></script>
 </head>
 
 <body>
@@ -297,63 +298,26 @@
                                             <th>操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
+                                        <tbody id="rr">
+                                        <tr v-for="(x,index) of list" :key="index">
                                             <td>
                                                 <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" value="1001"><span></span>
+                                                    <input type="checkbox" name="ids[]" :value=&quot;{{x.empId}}&quot;><span></span>
                                                 </label>
                                             </td>
-                                            <td>10001</td>
-                                            <td>李雷</td>
-                                            <td>19</td>
-                                            <td>人事部</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-12</td>
+                                            <td>{{x.empId}}</td>
+                                            <td>{{x.empName}}</td>
+                                            <td>{{x.age}}</td>
+                                            <td>{{x.department.deptName}}</td>
+                                            <td>{{x.hireDate}}</td>
+                                            <td>{{x.updateTime}}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a class="btn btn-xs btn-default" href="thread_update.html" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
-                                                    <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
+                                                    <a class="btn btn-xs btn-default" @click="deleteButton(x.empId)" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
                                                 </div>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" value="1001"><span></span>
-                                                </label>
-                                            </td>
-                                            <td>10001</td>
-                                            <td>李雷</td>
-                                            <td>19</td>
-                                            <td>人事部</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-12</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="thread_update.html" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
-                                                    <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" value="1001"><span></span>
-                                                </label>
-                                            </td>
-                                            <td>10001</td>
-                                            <td>李雷</td>
-                                            <td>19</td>
-                                            <td>人事部</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-12</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="thread_update.html" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
-                                                    <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
-                                                </div>
-                                            </td>
+
                                         </tr>
                                         </tbody>
                                     </table>
@@ -386,48 +350,48 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="js/main.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!--图表插件-->
 <script type="text/javascript" src="js/Chart.js"></script>
 <script src="js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript">
 
-    $(function(){
-        /* 删除提示框生成 */
-        $('#btnDel').on('click', function () {
+    new Vue({
+        el:'#rr',
+        data:{
+            list:[],
+        },
+        methods:{
+            deleteButton:function (empId) {
 
+                $.getJSON('http://192.168.2.248:8080/deleteEmployee',{"empId":empId},function (res) {
 
-            //获取被选中的多选框
-            var cks = $("input[type='checkbox']:checked").not($("#check-all"));
-            for(var i=0;i<cks.length;i++){
-                console.log(cks[i].value);
-            }
-
-            $.confirm({
-                title: '删除',
-                content: '是否确认删除?',
-                type: 'red',
-                typeAnimated: true,
-                buttons: {
-                    tryAgain: {
-                        text: '确认',
-                        btnClass: 'btn-red',
-                        action: function(){
-                            //当点击确认删除时被执行
-                            console.log('确认删除....');
-
-                        }
-                    },
-                    close: {
-                        text: '关闭'
+                    console.log(res.message.code);
+                    //console.log(res.data.data.data);
+                    if (res.message.code==200){
+                        window.location.href="employee_list.html";
+                    }else {
+                        alert(res.message.message);
                     }
+                })
+            }
+        },
+        mounted:function () {
+            that =this
+            axios.get('http://192.168.2.248:8080/getEmployeeList',{pageNo: 1,pageSize: 4})
+            .then(function (res) {
+                // console.log(res.data.message.code);
+                // console.log(res.data.data.data);
+                if (res.data.message.code==200){
+                    that.list = res.data.data.data;
+                }else {
+                    alert(res.data.message.message);
                 }
-            });
-        });
-
-
-
-    });
-
+            })
+            .catch(function (error) {
+            })
+        }
+    })
 </script>
 </body>
 </html>
