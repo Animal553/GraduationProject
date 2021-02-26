@@ -14,6 +14,7 @@
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+    <script type="text/javascript" src="js/vue.js"></script>
 </head>
 <!--
     此代码来源于千锋南京Java教学部
@@ -262,7 +263,7 @@
         <!--End 头部信息-->
 
         <!--页面主要内容-->
-        <main class="lyear-layout-content">
+        <main id="rr" class="lyear-layout-content">
 
             <div class="container-fluid">
 
@@ -313,55 +314,39 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr v-for="(x,index) of list" :key="index">
                                             <td>
                                                 <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" value="1001"><span></span>
+                                                    <input type="checkbox" name="ids[]" :value="x.contractId"><span></span>
                                                 </label>
                                             </td>
-                                            <td><a href="#" data-toggle="modal" data-target="#gridSystemModal">10001</a>
-                                            </td>
-                                            <td><a class="contractClass" href="JavaWeb.pdf">金融理财产品</a></td>
-                                            <td>张三</td>
-                                            <td>199.12</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-13</td>
-                                            <td>李雷</td>
-                                            <td>韩梅梅</td>
-                                            <td>张三</td>
-                                            <td>张三</td>
-                                            <td>张三</td>
-                                            <td>已提交</td>
-                                        </tr>
-                                        <tr>
+                                            <td>{{x.contractId}}</td>
+                                            <td>{{x.contractName}}</td>
+                                            <td>{{x.customer.customerId}}</td>
+                                            <td>{{x.contractPrice}}</td>
+                                            <td>{{x.startTime}}</td>
+                                            <td>{{x.endTime}}</td>
+                                            <td>{{x.customerSign}}</td>
+                                            <td>{{x.companySignName.empName}}</td>
+                                            <td>{{x.chargeName.empName}}</td>
+                                            <td>{{x.approval1Name.empName}}</td>
+                                            <td>{{x.approval2Name.empName}}</td>
+                                            <td>{{x.status==(0||1||2||3||4)?'已提交':'未提交'}}</td>
                                             <td>
-                                                <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" value="1001"><span></span>
-                                                </label>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-xs btn-default" href="thread_update.html" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
+                                                    <a class="btn btn-xs btn-default" @click="deleteButton(x.contractId)" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
+                                                </div>
                                             </td>
-                                            <td><a href="#">10002</a></td>
-                                            <td><a class="contractClass" href="JavaWeb.pdf">金融理财产品</a></td>
-                                            <td>张三</td>
-                                            <td>199.12</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-13</td>
-                                            <td>李雷</td>
-                                            <td>韩梅梅</td>
-                                            <td>张三</td>
-                                            <td>张三</td>
-                                            <td>张三</td>
-                                            <td>已提交</td>
+
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <ul class="pagination">
-                                    <li class="disabled"><span>«</span></li>
-                                    <li class="active"><span>1</span></li>
-                                    <li><a href="#1">2</a></li>
-                                    <li><a href="#1">3</a></li>
-                                    <li><a href="#1">4</a></li>
-                                    <li><a href="#!">»</a></li>
+                                    <li><a  @click="perPage">«</a></li>
+                                    <li  v-for="(x,index) of pages" :key="index"><span>{{x}}</span></li>
+                                    <li><a  @click="nextPage">»</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -373,72 +358,7 @@
     </div>
 </div>
 
-<!-- 合同状态start -->
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="gridSystemModalLabel">合同信息</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="nav-step step-anchor">
-                            <li class="nav-step-item complete">
-                                <a href="#step-1">
-                                    <h6>张三</h6>
-                                    <p class="m-0">已审批</p>
-                                </a>
-                            </li>
-                            <li class="nav-step-item active">
-                                <a href="#step-2">
-                                    <h6>李四</h6>
-                                    <p class="m-0">已审批</p>
-                                </a>
-                            </li>
-                            <li class="nav-step-item">
-                                <a href="#step-3">
-                                    <h6>王五</h6>
-                                    <p class="m-0">待审批</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-header">
-                    <h4 class="modal-title" id="gridSystemModalLabel">产品列表</h4>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>产品名称</th>
-                                <th>产品编号</th>
-                                <th>价格</th>
-                                <th>数量</th>
-                                <th>合计</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>小米10</th>
-                                <td>xm100001</td>
-                                <td>200</td>
-                                <td>10</td>
-                                <td>2000</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 合同状态end -->
+
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -453,6 +373,139 @@
     /* 查看pdf文件 */
     $(".contractClass").click(function () {
         PDFObject.embed(this.href);
+    });
+
+    new Vue({
+        el:'#rr',
+        data:{
+            list:[],
+            id:[],
+            pageNo: 1,
+            pageSize: 4,
+            pageCount:1,
+        },
+        methods:{
+            deleteButton:function (contractId) {
+                $.getJSON('http://192.168.2.248:8080/deleteContract',{"contractId":contractId},function (res) {
+
+                    // console.log(res.message.code);
+                    //console.log(res.data.data.data);
+                    if (res.message.code==200){
+                        window.location.href="contract_list.html";
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            },
+            nextPage:function () {
+                that =this
+                if (this.pageNo>=this.pageCount){
+                    alert("已经是最后一页了");
+                }else {
+                    this.pageNo = this.pageNo+1;
+                }
+                $.getJSON('http://192.168.2.248:8080/getContractList',{"pageNo": this.pageNo,"pageSize": 5},function (res) {
+                    console.log(res)
+                    if (res.message.code==200){
+                        that.list = res.data.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            },
+            perPage:function () {
+                if (this.pageNo<=1){
+                    alert("已经是第一页了");
+                }else {
+                    this.pageNo = this.pageNo-1;
+                }
+                that =this
+                $.getJSON('http://192.168.2.248:8080/getContractList',{"pageNo": this.pageNo,"pageSize": 5},function (res) {
+
+                    if (res.message.code==200){
+                        that.list = res.data.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            }
+        },
+        computed:{
+
+            pages:function () {
+                let arr = [];
+
+                if (this.pageCount <5){
+                    for (var i = 1; i <=this.pageCount ; i++) {
+                        arr.push(i);
+                    }
+                }else {
+                    if (this.pageNo<=3){
+                        for (var i = 1; i <=3 ; i++) {
+                            arr.push(i);
+                        }
+                    }else {
+                        for (var i = this.pageNo-2; i <=this.pageNo ; i++) {
+                            arr.push(i);
+                        }
+                    }
+                }
+                return arr;
+            }
+        },
+        mounted:function () {
+            that =this
+            $.getJSON('http://192.168.2.248:8080/getContractList',{"pageNo": 1,"pageSize": 5},function (res) {
+
+                // console.log(res.message.code);
+                console.log("====",res);
+                if (res.message.code==200){
+                    that.list = res.data.data;
+                    that.pageNo = res.data.pageNo;
+                    that.pageSize =res.data.pageSize;
+                    that.pageCount = res.data.pageCount;
+                }else {
+                    alert(res.message.message);
+                }
+            })
+        }
+    })
+
+    $(function () {
+        /* 删除提示框生成 */
+        $('#btnDel').on('click', function () {
+            var array = new Array();
+            //获取被选中的多选框
+            var cks = $("input[type='checkbox']:checked").not($("#check-all"));
+            for (var i = 0; i < cks.length; i++) {
+                array.push(cks[i].value)
+            }
+            $.confirm({
+                title: '删除',
+                content: '是否确认删除?',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: '确认',
+                        btnClass: 'btn-red',
+                        action: function () {
+                            //当点击确认删除时被执行
+                            $.getJSON('http://192.168.2.248:8080/deleteContractList',{array:array},function (res) {
+                                if (res.message.code==200){
+                                    window.location.href="contract_list.html"
+                                }else {
+                                    alert(res.message.message);
+                                }
+                            })
+                        }
+                    },
+                    close: {
+                        text: '关闭'
+                    }
+                }
+            });
+        });
     });
 
 

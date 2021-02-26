@@ -14,6 +14,7 @@
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+    <script type="text/javascript" src="js/vue.js"></script>
 </head>
 <!--
     此代码来源于千锋南京Java教学部
@@ -262,10 +263,9 @@
         <!--End 头部信息-->
 
         <!--页面主要内容-->
-        <main class="lyear-layout-content">
+        <main id="rr" class="lyear-layout-content">
 
             <div class="container-fluid">
-
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -284,8 +284,7 @@
                                     <a class="btn btn-primary m-r-5" href="thread_add.html"><i class="mdi mdi-plus"></i>
                                         新增</a>
                                     <a class="btn btn-info m-r-5" href="#!"><i class="mdi mdi-check"></i> 导出</a>
-                                    <a id="btnDel" class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i>
-                                        删除</a>
+                                    <a id="btnDel" class="btn btn-danger" ><i class="mdi mdi-window-close"></i>删除</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -313,68 +312,38 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr v-for="(x,index) of list" :key="index">
                                             <td>
                                                 <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" value="1001"><span></span>
+                                                    <input type="checkbox" name="ids[]" :value="x.customerId"><span></span>
                                                 </label>
                                             </td>
-                                            <td>广东文化科技</td>
-                                            <td>13598745412</td>
-                                            <td>张三</td>
-                                            <td>金庸</td>
-                                            <td>转介绍</td>
-                                            <td>金融业</td>
-                                            <td>B（普通客户）</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-12</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="thread_update.html"
-                                                       title="编辑" data-toggle="tooltip"><i
-                                                            class="mdi mdi-pencil"></i></a>
-                                                    <a class="btn btn-xs btn-default" href="#!" title="删除"
-                                                       data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" value="1002"><span></span>
-                                                </label>
-                                            </td>
-                                            <td>广东文化科技</td>
-                                            <td>13598745412</td>
-                                            <td>张三</td>
-                                            <td>金庸</td>
-                                            <td>转介绍</td>
-                                            <td>金融业</td>
-                                            <td>B（普通客户）</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-12</td>
-                                            <td>2012-12-12</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="#!" title="编辑"
-                                                       data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
-                                                    <a class="btn btn-xs btn-default" href="#!" title="删除"
-                                                       data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
 
+                                            <td>{{x.customerName}}</td>
+                                            <td>{{x.phone}}</td>
+                                            <td>{{x.chargeName.empName}}</td>
+                                            <td>{{x.createName.empName}}</td>
+                                            <td>{{x.source.sourceName}}</td>
+                                            <td>{{x.industry.industryName}}</td>
+                                            <td>{{x.level.levelName}}</td>
+                                            <td>{{x.createTime}}</td>
+                                            <td>{{x.updateTime}}</td>
+                                            <td>{{x.nextTime}}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-xs btn-default" href="thread_update.html" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
+                                                    <a class="btn btn-xs btn-default" @click="deleteButton(x.customerId)" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
+                                                </div>
+                                            </td>
+
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <ul class="pagination">
-                                    <li class="disabled"><span>«</span></li>
-                                    <li class="active"><span>1</span></li>
-                                    <li><a href="#1">2</a></li>
-                                    <li><a href="#1">3</a></li>
-                                    <li><a href="#1">4</a></li>
-                                    <li><a href="#!">»</a></li>
+                                    <li><a  @click="perPage">«</a></li>
+                                    <li  v-for="(x,index) of pages" :key="index"><span>{{x}}</span></li>
+                                    <li><a  @click="nextPage">»</a></li>
                                 </ul>
 
                             </div>
@@ -400,17 +369,111 @@
 <script src="js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript">
 
+    new Vue({
+        el:'#rr',
+        data:{
+            list:[],
+            id:[],
+            pageNo: 1,
+            pageSize: 4,
+            pageCount:1,
+        },
+        methods:{
+            deleteButton:function (customerId) {
+                $.getJSON('http://192.168.2.248:8080/deleteCustomer',{"customerId":customerId},function (res) {
+
+                    // console.log(res.message.code);
+                    //console.log(res.data.data.data);
+                    if (res.message.code==200){
+                        window.location.href="thread_list.html";
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            },
+            nextPage:function () {
+                that =this
+                if (this.pageNo>=this.pageCount){
+                    alert("已经是最后一页了");
+                }else {
+                    this.pageNo = this.pageNo+1;
+                }
+                $.getJSON('http://192.168.2.248:8080/getCustomerListByFlg',{"pageNo": this.pageNo,"pageSize": 8,"flg":0},function (res) {
+
+                    if (res.message.code==200){
+                        that.list = res.data.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            },
+            perPage:function () {
+                if (this.pageNo<=1){
+                    alert("已经是第一页了");
+                }else {
+                    this.pageNo = this.pageNo-1;
+                }
+                that =this
+                $.getJSON('http://192.168.2.248:8080/getCustomerListByFlg',{"pageNo": this.pageNo,"pageSize": 8,"flg":0},function (res) {
+
+                    if (res.message.code==200){
+                        that.list = res.data.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            }
+        },
+        computed:{
+
+            pages:function () {
+                let arr = [];
+
+                if (this.pageCount <5){
+                    for (var i = 1; i <=this.pageCount ; i++) {
+                        arr.push(i);
+                    }
+                }else {
+                    if (this.pageNo<=3){
+                        for (var i = 1; i <=3 ; i++) {
+                            arr.push(i);
+                        }
+                    }else {
+                        for (var i = this.pageNo-2; i <=this.pageNo ; i++) {
+                            arr.push(i);
+                        }
+                    }
+                }
+                return arr;
+            }
+        },
+        mounted:function () {
+            that =this
+            $.getJSON('http://192.168.2.248:8080/getCustomerListByFlg',{"pageNo": 1,"pageSize": 8,"flg":0},function (res) {
+
+                // console.log(res.message.code);
+                // console.log(res.data.data);
+                if (res.message.code==200){
+                    that.list = res.data.data;
+                    that.pageNo = res.data.pageNo;
+                    that.pageSize =res.data.pageSize;
+                    that.pageCount = res.data.pageCount;
+                }else {
+                    alert(res.message.message);
+                }
+            })
+        }
+    })
+
     $(function () {
         /* 删除提示框生成 */
         $('#btnDel').on('click', function () {
-
-
+            var array = new Array();
             //获取被选中的多选框
             var cks = $("input[type='checkbox']:checked").not($("#check-all"));
             for (var i = 0; i < cks.length; i++) {
-                console.log(cks[i].value);
+                array.push(cks[i].value)
             }
-
             $.confirm({
                 title: '删除',
                 content: '是否确认删除?',
@@ -422,8 +485,13 @@
                         btnClass: 'btn-red',
                         action: function () {
                             //当点击确认删除时被执行
-                            console.log('确认删除....');
-
+                            $.getJSON('http://192.168.2.248:8080/deleteCustomerList',{array:array},function (res) {
+                                if (res.message.code==200){
+                                    window.location.href="thread_list.html"
+                                }else {
+                                    alert(res.message.message);
+                                }
+                            })
                         }
                     },
                     close: {
@@ -432,8 +500,6 @@
                 }
             });
         });
-
-
     });
 
 </script>

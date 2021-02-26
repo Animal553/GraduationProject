@@ -324,7 +324,7 @@
                                             <td>{{x.employee.empName}}</td>
                                             <td>{{x.createTime}}</td>
                                             <td>{{x.updateTime}}</td>
-                                            <td>{{x.status}}</td>
+                                            <td>{{x.status==1?'上架':'下架'}}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a class="btn btn-xs btn-default" href="thread_update.html" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
@@ -369,7 +369,7 @@
         el:'#rr',
         data:{
             list:[],
-            id:[],
+            id:0,
             pageNo: 1,
             pageSize: 4,
             pageCount:1,
