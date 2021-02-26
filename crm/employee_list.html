@@ -302,7 +302,7 @@
                                         <tr v-for="(x,index) of list" :key="index">
                                             <td>
                                                 <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" :value=&quot;{{x.empId}}&quot;><span></span>
+                                                    <input type="checkbox" name="ids[]" :value=x.empId><span></span>
                                                 </label>
                                             </td>
                                             <td>{{x.empId}}</td>
@@ -350,7 +350,6 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="js/main.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!--图表插件-->
 <script type="text/javascript" src="js/Chart.js"></script>
 <script src="js/jconfirm/jquery-confirm.min.js"></script>
@@ -378,20 +377,52 @@
         },
         mounted:function () {
             that =this
-            axios.get('http://192.168.2.248:8080/getEmployeeList',{pageNo: 1,pageSize: 4})
-            .then(function (res) {
-                // console.log(res.data.message.code);
-                // console.log(res.data.data.data);
-                if (res.data.message.code==200){
-                    that.list = res.data.data.data;
+            $.getJSON('http://192.168.2.248:8080/getEmployeeList',{"pageNo": 1,"1pageSize": 5},function (res) {
+
+                console.log(res);
+                // console.log(res.message.code);
+                // console.log(res.data.data);
+                if (res.message.code==200){
+                    that.list = res.data.data;
                 }else {
-                    alert(res.data.message.message);
+                    alert(res.message.message);
                 }
-            })
-            .catch(function (error) {
             })
         }
     })
+
+    $(function () {
+        /* 删除提示框生成 */
+        $('#btnDel').on('click', function () {
+            //获取被选中的多选框
+            var cks = $("input[type='checkbox']:checked").not($("#check-all"));
+            for (var i = 0; i < cks.length; i++) {
+                console.log(cks[i].value);
+            }
+
+            $.confirm({
+                title: '删除',
+                content: '是否确认删除?',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: '确认',
+                        btnClass: 'btn-red',
+                        action: function () {
+                            //当点击确认删除时被执行
+                            console.log('确认删除....');
+                        }
+                    },
+                    close: {
+                        text: '关闭'
+                    }
+                }
+            });
+        });
+
+
+    });
 </script>
 </body>
 </html>
