@@ -18,7 +18,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/addCustomer")
     public Result addCustomer(Customer customer){
         Result result = null;
@@ -36,7 +36,7 @@ public class CustomerController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/deleteCustomer")
     public Result deleteCustomer(Integer customerId){
         Result result = null;
@@ -54,7 +54,7 @@ public class CustomerController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/updateCustomer")
     public Result updateCustomer(Customer customer){
         Result result = null;
@@ -72,7 +72,7 @@ public class CustomerController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getCustomerList")
     public Result getCustomerList(Integer pageNo, Integer pageSize){
         Result result = null;
@@ -91,7 +91,7 @@ public class CustomerController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getCustomer")
     public Result getCustomer(Integer customerId){
         Result result = null;

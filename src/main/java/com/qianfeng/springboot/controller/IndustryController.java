@@ -18,7 +18,7 @@ public class IndustryController {
     @Autowired
     private IndustryService industryService;
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getIndustryList")
     public Result getIndustryList(){
 
@@ -37,7 +37,7 @@ public class IndustryController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getIndustry")
     public Result getIndustry(Integer industryId){
 

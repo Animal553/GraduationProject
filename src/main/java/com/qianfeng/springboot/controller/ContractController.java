@@ -41,7 +41,7 @@ public class ContractController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/deleteContract")
     public Result deleteContract(Integer contractId){
         Result result = null;
@@ -59,7 +59,7 @@ public class ContractController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/updateContract")
     public Result updateContract(Contract contract){
         Result result = null;
@@ -76,7 +76,7 @@ public class ContractController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getContractList")
     public Result getContractList(Integer pageNo,Integer pageSize){
         Result result = null;
@@ -95,7 +95,7 @@ public class ContractController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getContract")
     public Result getContract(Integer contractId){
         Result result = null;

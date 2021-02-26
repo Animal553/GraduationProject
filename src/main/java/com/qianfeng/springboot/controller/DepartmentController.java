@@ -19,7 +19,7 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/addDepartment")
     public Result addDepartment(Department department){
         Result result = null;
@@ -35,7 +35,7 @@ public class DepartmentController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/deleteDepartment")
     public Result deleteDepartment(Integer deptId){
         Result result = null;
@@ -51,7 +51,7 @@ public class DepartmentController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/updateDepartment")
     public Result updateDepartment(Department department){
         Result result = null;
@@ -67,7 +67,7 @@ public class DepartmentController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getDepartmentList")
     public Result getDepartmentList(Integer pageNo, Integer pageSize){
         Result result = null;
@@ -84,7 +84,7 @@ public class DepartmentController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getDepartment")
     public Result getDepartment(Integer deptId){
         Result result = null;

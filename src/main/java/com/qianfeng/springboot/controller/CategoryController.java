@@ -19,7 +19,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getCategoryList")
     public Result getCategoryList(){
 
@@ -38,7 +38,7 @@ public class CategoryController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getCategory")
     public Result getCategory(Integer categoryId){
 

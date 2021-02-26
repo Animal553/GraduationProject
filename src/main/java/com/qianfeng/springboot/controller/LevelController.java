@@ -18,7 +18,7 @@ public class LevelController {
     @Autowired
     private LevelService levelService;
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getLevelList")
     public Result getLevelList(){
 
@@ -37,7 +37,7 @@ public class LevelController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getLevel")
     public Result getLevel(Integer levelId){
 

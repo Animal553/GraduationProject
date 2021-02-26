@@ -18,7 +18,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/addProduct")
     public Result addProduct(Product product){
         Result result = null;
@@ -35,7 +35,7 @@ public class ProductController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/deleteProduct")
     public Result deleteProduct(Integer productId){
         Result result = null;
@@ -52,7 +52,7 @@ public class ProductController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/updateProduct")
     public Result updateProduct(Product product){
         Result result = null;
@@ -69,7 +69,7 @@ public class ProductController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getProductList")
     public Result getProductList(Integer pageNo, Integer pageSize){
         Result result = null;
@@ -87,7 +87,7 @@ public class ProductController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getProduct")
     public Result getProduct(Integer productId){
         Result result = null;

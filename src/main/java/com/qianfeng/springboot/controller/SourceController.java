@@ -18,7 +18,7 @@ public class SourceController {
     @Autowired
     private SourceService sourceService;
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getSourceList")
     public Result getSourceList(){
 
@@ -37,7 +37,7 @@ public class SourceController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getSource")
     public Result getSource(Integer sourceId){
 

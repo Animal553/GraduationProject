@@ -19,7 +19,7 @@ public class ContractProductController {
     @Autowired
     private ContractProductService contractProductService;
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/addContractProduct")
     public Result addContractProduct(ContractProduct contractProduct){
         Result result = null;
@@ -36,7 +36,7 @@ public class ContractProductController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/deleteContractProduct")
     public Result deleteContractProduct(Integer cpId){
         Result result = null;
@@ -53,7 +53,7 @@ public class ContractProductController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @PostMapping("/updateContractProduct")
     public Result updateContractProduct(ContractProduct contractProduct){
         Result result = null;
@@ -70,7 +70,7 @@ public class ContractProductController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getContractProductList")
     public Result getContractProductList(Integer pageNo, Integer pageSize){
         Result result = null;
@@ -88,7 +88,7 @@ public class ContractProductController {
         return result;
     }
 
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getContractProduct")
     public Result getContractProduct(Integer cpId){
         Result result = null;
