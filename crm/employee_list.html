@@ -255,7 +255,7 @@
         <!--End 头部信息-->
 
         <!--页面主要内容-->
-        <main class="lyear-layout-content">
+        <main id="rr" class="lyear-layout-content">
 
             <div class="container-fluid">
 
@@ -298,7 +298,7 @@
                                             <th>操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="rr">
+                                        <tbody>
                                         <tr v-for="(x,index) of list" :key="index">
                                             <td>
                                                 <label class="lyear-checkbox checkbox-primary">
@@ -323,12 +323,11 @@
                                     </table>
                                 </div>
                                 <ul class="pagination">
-                                    <li class="disabled"><span>«</span></li>
-                                    <li class="active"><span>1</span></li>
-                                    <li><a href="#1">2</a></li>
-                                    <li><a href="#1">3</a></li>
-                                    <li><a href="#1">4</a></li>
-                                    <li><a href="#!">»</a></li>
+                                    <li><a  @click="perPage">«</a></li>
+<!--                                    class=active-->
+<!--                                    v-if="pageNo==x":class="active"-->
+                                    <li v-for="(x,index) of pages" :key="index"><span>{{x}}</span></li>
+                                    <li><a  @click="nextPage">»</a></li>
                                 </ul>
 
                             </div>
@@ -336,8 +335,6 @@
                     </div>
 
                 </div>
-
-
 
             </div>
 
@@ -359,11 +356,13 @@
         el:'#rr',
         data:{
             list:[],
-            id:[]
+            id:[],
+            pageNo: 1,
+            pageSize: 4,
+            pageCount:1,
         },
         methods:{
             deleteButton:function (empId) {
-
                 $.getJSON('http://192.168.2.248:8080/deleteEmployee',{"empId":empId},function (res) {
 
                     // console.log(res.message.code);
@@ -374,17 +373,74 @@
                         alert(res.message.message);
                     }
                 })
+            },
+            nextPage:function () {
+                that =this
+                 if (this.pageNo>=this.pageCount){
+                     alert("已经是最后一页了");
+                 }else {
+                     this.pageNo = this.pageNo+1;
+                 }
+                $.getJSON('http://192.168.2.248:8080/getEmployeeList',{"pageNo": this.pageNo,"pageSize": 8},function (res) {
+
+                    if (res.message.code==200){
+                        that.list = res.data.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            },
+            perPage:function () {
+                if (this.pageNo<=1){
+                    alert("已经是第一页了");
+                }else {
+                    this.pageNo = this.pageNo-1;
+                }
+                that =this
+                $.getJSON('http://192.168.2.248:8080/getEmployeeList',{"pageNo": this.pageNo,"pageSize": 8},function (res) {
+
+                    if (res.message.code==200){
+                        that.list = res.data.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            }
+        },
+        computed:{
+
+            pages:function () {
+                let arr = [];
+
+                if (this.pageCount <5){
+                    for (var i = 1; i <=this.pageCount ; i++) {
+                        arr.push(i);
+                    }
+                }else {
+                    if (this.pageNo<=3){
+                        for (var i = 1; i <=3 ; i++) {
+                            arr.push(i);
+                        }
+                    }else {
+                        for (var i = this.pageNo-2; i <=this.pageNo ; i++) {
+                            arr.push(i);
+                        }
+                    }
+                }
+                return arr;
             }
         },
         mounted:function () {
             that =this
             $.getJSON('http://192.168.2.248:8080/getEmployeeList',{"pageNo": 1,"pageSize": 8},function (res) {
 
-                console.log(res);
                 // console.log(res.message.code);
                 // console.log(res.data.data);
                 if (res.message.code==200){
                     that.list = res.data.data;
+                    that.pageNo = res.data.pageNo;
+                    that.pageSize =res.data.pageSize;
+                    that.pageCount = res.data.pageCount;
                 }else {
                     alert(res.message.message);
                 }
@@ -399,7 +455,6 @@
             //获取被选中的多选框
             var cks = $("input[type='checkbox']:checked").not($("#check-all"));
             for (var i = 0; i < cks.length; i++) {
-                console.log(cks[i].value);
                 array.push(cks[i].value)
             }
             $.confirm({
@@ -414,7 +469,6 @@
                         action: function () {
                             //当点击确认删除时被执行
                             $.getJSON('http://192.168.2.248:8080/deleteEmployeeList',{array:array},function (res) {
-                                console.log(array)
                                 if (res.message.code==200){
                                     window.location.href="employee_list.html"
                                 }else {
