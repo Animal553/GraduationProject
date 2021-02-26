@@ -324,9 +324,7 @@
                                 </div>
                                 <ul class="pagination">
                                     <li><a  @click="perPage">«</a></li>
-<!--                                    class=active-->
-<!--                                    v-if="pageNo==x":class="active"-->
-                                    <li v-for="(x,index) of pages" :key="index"><span>{{x}}</span></li>
+                                    <li  v-for="(x,index) of pages" :key="index"><span>{{x}}</span></li>
                                     <li><a  @click="nextPage">»</a></li>
                                 </ul>
 
