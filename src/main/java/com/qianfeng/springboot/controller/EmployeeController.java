@@ -2,6 +2,7 @@ package com.qianfeng.springboot.controller;
 
 import com.qianfeng.springboot.Exceptions.MyException;
 import com.qianfeng.springboot.entity.Employee;
+import com.qianfeng.springboot.entity.Industry;
 import com.qianfeng.springboot.enums.MyEnum;
 import com.qianfeng.springboot.page.Message;
 import com.qianfeng.springboot.page.Page;
@@ -9,14 +10,14 @@ import com.qianfeng.springboot.page.Result;
 import com.qianfeng.springboot.service.EmployeeService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -60,10 +61,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/deleteEmployeeList")
-    public Result deleteEmployeeList(List<Integer> empIdList){
+    public Result deleteEmployeeList(HttpServletRequest request){
+        String[] array = request.getParameterValues("array[]");
+        List<Integer> empIdList = new ArrayList<>();
+        for (String s : array) {
+            empIdList.add(Integer.valueOf(s));
+        }
         Result result = null;
         Message message = null;
-
         try {
             result = new Result();
             message = new Message(MyEnum.OK);
