@@ -3,6 +3,8 @@ package com.qianfeng.springboot.service;
 import com.qianfeng.springboot.entity.Employee;
 import com.qianfeng.springboot.page.Page;
 
+import java.util.List;
+
 
 public interface EmployeeService {
     void addEmployee(Employee employee);
@@ -12,4 +14,5 @@ public interface EmployeeService {
     Employee getEmployee(Integer empId);
     Employee getEmployeeByName(String empName);
     Employee getEmployeeByEmail(String email);
+    void deleteEmployeeList(List<Integer> empIdList);
 }

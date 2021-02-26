@@ -82,4 +82,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
 
     }
+
+    @Override
+    public void deleteEmployeeList(List<Integer> empIdList) {
+        employeeMapper.deleteEmployeeList(empIdList);
+    }
 }

@@ -15,4 +15,5 @@ public interface EmployeeMapper {
     Employee getEmployee(Integer empId);
     Employee getEmployeeByName(String empName);
     Employee getEmployeeByEmail(String email);
+    void deleteEmployeeList(List<Integer> empIdList);
 }

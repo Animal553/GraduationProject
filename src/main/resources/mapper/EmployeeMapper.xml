@@ -59,4 +59,11 @@
     <select id="getEmployeeByName" parameterType="String" resultMap="empMap">
         SELECT * FROM employee WHERE emp_name like "%"#{empName}"%"
     </select>
+
+    <delete id="deleteEmployeeList" parameterType="list">
+        DELETE FROM employee WHERE emp_id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

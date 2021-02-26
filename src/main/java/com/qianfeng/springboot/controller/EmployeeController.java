@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class EmployeeController {
@@ -50,6 +52,22 @@ public class EmployeeController {
             result = new Result();
             message = new Message(MyEnum.OK);
             employeeService.deleteEmployee(empId);
+            result.setMessage(message);
+        }catch (Exception e){
+            throw new MyException(MyEnum.DELETE_ERROR);
+        }
+        return result;
+    }
+
+    @GetMapping("/deleteEmployeeList")
+    public Result deleteEmployeeList(List<Integer> empIdList){
+        Result result = null;
+        Message message = null;
+
+        try {
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            employeeService.deleteEmployeeList(empIdList);
             result.setMessage(message);
         }catch (Exception e){
             throw new MyException(MyEnum.DELETE_ERROR);

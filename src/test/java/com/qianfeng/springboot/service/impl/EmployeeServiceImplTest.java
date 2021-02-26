@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class EmployeeServiceImplTest {
@@ -16,7 +19,11 @@ class EmployeeServiceImplTest {
 
     @Test
     void getEmployeeByName() {
-        Employee employee = employeeService.getEmployeeByName("猪");
-        System.out.println(employee);
+       List list = new ArrayList();
+        list.add(1001);
+        list.add(1002);
+        list.add(1003);
+        employeeService.deleteEmployeeList(list);
+
     }
 }
