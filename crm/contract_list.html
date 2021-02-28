@@ -469,7 +469,6 @@
             $.getJSON('http://192.168.2.248:8080/getContractList',{"pageNo": 1,"pageSize": 5},function (res) {
 
                 // console.log(res.message.code);
-                console.log("====",res);
                 if (res.message.code==200){
                     that.list = res.data.data;
                     that.pageNo = res.data.pageNo;

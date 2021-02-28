@@ -72,7 +72,7 @@
         SELECT * FROM customer WHERE flg =#{flg}
     </select>
 
-    <select id="getCustomerByName" parameterType="String" resultMap="cusMap">
-        SELECT * FROM customer WHERE customer_name = "%"#{customerName}"%"
+    <select id="getCustomerByName" resultMap="cusMap">
+        SELECT * FROM customer WHERE customer_name like "%"#{customerName}"%" AND flg =#{flg}
     </select>
 </mapper>

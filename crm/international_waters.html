@@ -423,7 +423,7 @@
             selectLike:function () {
                 var likeName = $("#likeName").val();
                 that =this
-                $.getJSON('http://192.168.2.248:8080/getCustomerByName',{"customerName":likeName},function (res) {
+                $.getJSON('http://192.168.2.248:8080/getCustomerByName',{"customerName":likeName,"flg":2},function (res) {
 
                     if (res.message.code==200){
                         that.list = res.data;

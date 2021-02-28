@@ -60,10 +60,10 @@
     </select>
 
     <select id="getContractName" parameterType="String" resultMap="contMap">
-        SELECT * FROM contract WHERE contarct_name ="%"#{contractName}"%"
+        SELECT * FROM contract WHERE contract_name like "%"#{contractName}"%"
     </select>
 
     <select id="getContract" resultMap="contMap">
-        SELECT * FROM contract WHERE contract_id =#{contractId}
+        SELECT * FROM contract WHERE contract_id #{contractId}
     </select>
 </mapper>

@@ -12,7 +12,7 @@ public interface CustomerService {
     void updateCustomer(Customer customer);
     Page getCustomerList(Integer pageNo, Integer pageSize);
     Page getCustomerListByFlg(Integer pageNo, Integer pageSize, Integer flg);
-    List<Customer> getCustomerByName(String customerName);
+    List<Customer> getCustomerByName(String customerName,Integer flg);
     Customer getCustomer(Integer customerId);
     void updateCustomerToFlg();
 }

@@ -84,8 +84,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getCustomerByName(String customerName) {
-        List<Customer> customerList = customerMapper.getCustomerByName(customerName);
+    public List<Customer> getCustomerByName(String customerName,Integer flg) {
+        List<Customer> customerList = customerMapper.getCustomerByName(customerName,flg);
         return customerList;
     }
 

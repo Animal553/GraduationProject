@@ -46,7 +46,7 @@
     </select>
 
     <select id="getProductName" resultMap="proMap">
-        SELECT * FROM product WHERE product_name = "%"#{productName}"%"
+        SELECT * FROM product WHERE product_name like "%"#{productName}"%"
     </select>
     
     <select id="getProduct" resultMap="proMap">
