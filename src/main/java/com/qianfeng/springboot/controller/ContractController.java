@@ -99,7 +99,7 @@ public class ContractController {
     }
 
     //    @RequiresAuthentication
-    @GetMapping("/getContractName")
+    @GetMapping("/getContractByName")
     public Result getContractName(String contractName){
         Result result = null;
         Message message = null;

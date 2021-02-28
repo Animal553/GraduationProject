@@ -274,10 +274,9 @@
                             <div class="card-toolbar clearfix">
                                 <form class="pull-right search-bar" method="get" action="#!" role="form">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" value="" name="keyword"
-                                               placeholder="请输入部门名称">
+                                        <input id="likeName" type="text" class="form-control" value="" name="keyword" placeholder="请输入员工名称">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-dark" type="button">搜索</button>
+                                            <button @click="selectLike" class="btn btn-dark" type="button">搜索</button>
                                         </div>
                                     </div>
                                 </form>
@@ -404,6 +403,18 @@
 
                     if (res.message.code==200){
                         that.list = res.data.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            },
+            selectLike:function () {
+                var likeName = $("#likeName").val();
+                that =this
+                $.getJSON('http://192.168.2.248:8080/getDepartmentByName',{"deptName":likeName},function (res) {
+
+                    if (res.message.code==200){
+                        that.list = res.data;
                     }else {
                         alert(res.message.message);
                     }

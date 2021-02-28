@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class CustomerController {
@@ -121,6 +123,26 @@ public class CustomerController {
             result = new Result();
             message = new Message(MyEnum.OK);
             Page customerList = customerService.getCustomerListByFlg(pageNo, pageSize, flg);
+            result.setMessage(message);
+            result.setData(customerList);
+        }catch (Exception e){
+            throw new MyException(MyEnum.SELECT_ERROR);
+        }
+
+        return result;
+    }
+
+
+
+    @GetMapping("/getCustomerByName")
+    public Result getCustomerByName(String customerName){
+        Result result = null;
+        Message message = null;
+
+        try{
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            List<Customer> customerList = customerService.getCustomerByName(customerName);
             result.setMessage(message);
             result.setData(customerList);
         }catch (Exception e){

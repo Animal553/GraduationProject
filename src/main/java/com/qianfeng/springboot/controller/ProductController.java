@@ -92,7 +92,7 @@ public class ProductController {
     }
 
     //    @RequiresAuthentication
-    @GetMapping("/getProductName")
+    @GetMapping("/getProductByName")
     public Result getProductName(String productName){
         Result result = null;
         Message message = null;
