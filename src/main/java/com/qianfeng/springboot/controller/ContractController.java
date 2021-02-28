@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.websocket.server.PathParam;
 import java.io.File;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -88,6 +89,25 @@ public class ContractController {
             result = new Result();
             message = new Message(MyEnum.OK);
             Page contractList = contractService.getContractList(pageNo, pageSize);
+            result.setMessage(message);
+            result.setData(contractList);
+        }catch (Exception e){
+            throw new MyException(MyEnum.SELECT_ERROR);
+        }
+
+        return result;
+    }
+
+    //    @RequiresAuthentication
+    @GetMapping("/getContractName")
+    public Result getContractName(String contractName){
+        Result result = null;
+        Message message = null;
+
+        try{
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            List<Contract> contractList = contractService.getContractName(contractName);
             result.setMessage(message);
             result.setData(contractList);
         }catch (Exception e){

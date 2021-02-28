@@ -59,6 +59,10 @@
         SELECT * FROM contract
     </select>
 
+    <select id="getContractName" parameterType="String" resultMap="contMap">
+        SELECT * FROM contract WHERE contarct_name ="%"#{contractName}"%"
+    </select>
+
     <select id="getContract" resultMap="contMap">
         SELECT * FROM contract WHERE contract_id =#{contractId}
     </select>

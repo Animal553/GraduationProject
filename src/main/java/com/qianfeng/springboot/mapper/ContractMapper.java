@@ -11,5 +11,6 @@ public interface ContractMapper {
     void deleteContract(Integer contractId);
     void updateContract(Contract contract);
     List<Contract> getContractList();
+    List<Contract> getContractName(String contractName);
     Contract getContract(Integer contractId);
 }
