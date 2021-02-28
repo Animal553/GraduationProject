@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class ProductController {
@@ -81,6 +83,24 @@ public class ProductController {
             result = new Result();
             message = new Message(MyEnum.OK);
             Page productList = productService.getProductList(pageNo, pageSize);
+            result.setMessage(message);
+            result.setData(productList);
+        }catch (Exception e){
+            throw new MyException(MyEnum.SELECT_ERROR);
+        }
+        return result;
+    }
+
+    //    @RequiresAuthentication
+    @GetMapping("/getProductName")
+    public Result getProductName(String productName){
+        Result result = null;
+        Message message = null;
+
+        try {
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            List<Product> productList = productService.getProductName(productName);
             result.setMessage(message);
             result.setData(productList);
         }catch (Exception e){

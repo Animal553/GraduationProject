@@ -1,7 +1,6 @@
 package com.qianfeng.springboot.mapper;
 
 import com.qianfeng.springboot.entity.Department;
-import com.qianfeng.springboot.entity.Employee;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

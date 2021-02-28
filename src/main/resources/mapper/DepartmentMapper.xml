@@ -23,6 +23,11 @@
     <select id="getDepartmentList" resultType="department">
         SELECT * FROM department
     </select>
+
+    <select id="getDepartmentByName" parameterType="String" resultType="department">
+        SELECT * FROM department WHERE dept_name like "%"#{deptName}"%"
+    </select>
+
     <select id="getDepartment" parameterType="int" resultType="department">
         SELECT * FROM department WHERE dept_id =#{deptId}
     </select>

@@ -11,5 +11,6 @@ public interface ProductMapper {
     void deleteProduct(Integer productId);
     void updateProduct(Product product);
     List<Product> getProductList();
+    List<Product> getProductName(String productName);
     Product getProduct(Integer productId);
 }
