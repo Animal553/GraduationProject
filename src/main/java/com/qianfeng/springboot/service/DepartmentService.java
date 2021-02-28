@@ -14,4 +14,5 @@ public interface DepartmentService {
     Page getDepartmentList(Integer pageNo, Integer pageSize);
     List<Department> getDepartmentByName(String deptName);
     Department getDepartment(Integer deptId);
+    void deleteDepartmentList(List<Integer> deptIdList);
 }

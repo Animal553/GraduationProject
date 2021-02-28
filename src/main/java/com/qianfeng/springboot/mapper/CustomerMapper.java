@@ -17,4 +17,5 @@ public interface CustomerMapper {
     List<Customer> getCustomerByName(@Param("customerName") String customerName ,@Param("flg") Integer flg);
     Customer getCustomer(Integer customerId);
     void updateCustomerToFlg();
+    void deleteCustomerList(List<Integer> customerIdList);
 }

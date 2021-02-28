@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,26 @@ public class ProductController {
             result = new Result();
             message = new Message(MyEnum.OK);
             productService.deleteProduct(productId);
+            result.setMessage(message);
+        }catch (Exception e){
+            throw new MyException(MyEnum.DELETE_ERROR);
+        }
+        return result;
+    }
+
+    @GetMapping("/deleteProductList")
+    public Result deleteProductList(HttpServletRequest request){
+        String[] array = request.getParameterValues("array[]");
+        List<Integer> productList = new ArrayList<>();
+        for (String s : array) {
+            productList.add(Integer.valueOf(s));
+        }
+        Result result = null;
+        Message message = null;
+        try {
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            productService.deleteProductList(productList);
             result.setMessage(message);
         }catch (Exception e){
             throw new MyException(MyEnum.DELETE_ERROR);

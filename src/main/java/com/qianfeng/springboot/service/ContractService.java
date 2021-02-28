@@ -14,4 +14,5 @@ public interface ContractService {
     Page getContractList(Integer pageNo, Integer pageSize);
     List<Contract> getContractName(String contractName);
     Contract getContract(Integer contractId);
+    void deleteContractList(List<Integer> contractIdList);
 }

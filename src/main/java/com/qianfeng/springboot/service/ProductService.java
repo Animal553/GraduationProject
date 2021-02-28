@@ -13,4 +13,5 @@ public interface ProductService {
     Page getProductList(Integer pageNo, Integer pageSize);
     List<Product> getProductName(String productName);
     Product getProduct(Integer productId);
+    void deleteProductList(List<Integer> productIdList);
 }

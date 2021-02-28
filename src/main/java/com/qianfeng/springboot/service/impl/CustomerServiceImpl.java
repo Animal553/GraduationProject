@@ -100,4 +100,9 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomerToFlg() {
         customerMapper.updateCustomerToFlg();
     }
+
+    @Override
+    public void deleteCustomerList(List<Integer> customerIdList) {
+        customerMapper.deleteCustomerList(customerIdList);
+    }
 }

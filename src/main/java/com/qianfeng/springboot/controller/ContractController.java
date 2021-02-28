@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -59,6 +60,26 @@ public class ContractController {
             throw new MyException(MyEnum.DELETE_ERROR);
         }
 
+        return result;
+    }
+
+    @GetMapping("/deleteContractList")
+    public Result deleteContractList(HttpServletRequest request){
+        String[] array = request.getParameterValues("array[]");
+        List<Integer> contractList = new ArrayList<>();
+        for (String s : array) {
+            contractList.add(Integer.valueOf(s));
+        }
+        Result result = null;
+        Message message = null;
+        try {
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            contractService.deleteContractList(contractList);
+            result.setMessage(message);
+        }catch (Exception e){
+            throw new MyException(MyEnum.DELETE_ERROR);
+        }
         return result;
     }
 

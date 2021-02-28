@@ -13,4 +13,5 @@ public interface DepartmentMapper {
     List<Department> getDepartmentList();
     List<Department> getDepartmentByName(String empName);
     Department getDepartment(Integer deptId);
+    void deleteDepartmentList(List<Integer> deptIdList);
 }

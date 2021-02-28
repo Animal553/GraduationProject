@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,26 @@ public class DepartmentController {
             result = new Result();
             result.setMessage(message);
             departmentService.deleteDepartment(deptId);
+        }catch (Exception e){
+            throw new MyException(MyEnum.DELETE_ERROR);
+        }
+        return result;
+    }
+
+    @GetMapping("/deleteDepartmentList")
+    public Result deleteDepartmentList(HttpServletRequest request){
+        String[] array = request.getParameterValues("array[]");
+        List<Integer> deptList = new ArrayList<>();
+        for (String s : array) {
+            deptList.add(Integer.valueOf(s));
+        }
+        Result result = null;
+        Message message = null;
+        try {
+            result = new Result();
+            message = new Message(MyEnum.OK);
+            departmentService.deleteDepartmentList(deptList);
+            result.setMessage(message);
         }catch (Exception e){
             throw new MyException(MyEnum.DELETE_ERROR);
         }

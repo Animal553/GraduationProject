@@ -52,4 +52,11 @@
     <select id="getProduct" resultMap="proMap">
         SELECT * FROM product WHERE product_id =#{productId}
     </select>
+
+    <delete id="deleteProductList" parameterType="list">
+        DELETE FROM product WHERE product_id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

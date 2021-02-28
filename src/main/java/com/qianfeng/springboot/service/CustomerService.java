@@ -15,4 +15,5 @@ public interface CustomerService {
     List<Customer> getCustomerByName(String customerName, Integer flg);
     Customer getCustomer(Integer customerId);
     void updateCustomerToFlg();
+    void deleteCustomerList(List<Integer> customerIdList);
 }

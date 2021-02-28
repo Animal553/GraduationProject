@@ -74,4 +74,9 @@ public class ProductServiceImpl implements ProductService {
 
         return product;
     }
+
+    @Override
+    public void deleteProductList(List<Integer> productIdList) {
+        productMapper.deleteProductList(productIdList);
+    }
 }

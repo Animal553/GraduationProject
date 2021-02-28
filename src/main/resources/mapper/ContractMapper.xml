@@ -66,4 +66,11 @@
     <select id="getContract" resultMap="contMap">
         SELECT * FROM contract WHERE contract_id #{contractId}
     </select>
+
+    <delete id="deleteContractList" parameterType="list">
+        DELETE FROM contract WHERE contract_id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

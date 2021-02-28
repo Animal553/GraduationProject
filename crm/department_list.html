@@ -482,7 +482,7 @@
                         btnClass: 'btn-red',
                         action: function () {
                             //当点击确认删除时被执行
-                            $.getJSON('http://192.168.2.248:8080/getDepartmentList',{array:array},function (res) {
+                            $.getJSON('http://192.168.2.248:8080/deleteDepartmentList',{array:array},function (res) {
                                 if (res.message.code==200){
                                     window.location.href="department_list.html"
                                 }else {

@@ -75,4 +75,11 @@
     <select id="getCustomerByName" resultMap="cusMap">
         SELECT * FROM customer WHERE customer_name like "%"#{customerName}"%" AND flg =#{flg}
     </select>
+
+    <delete id="deleteCustomerList" parameterType="list">
+        DELETE FROM customer WHERE customer_id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

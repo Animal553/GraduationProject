@@ -84,4 +84,9 @@ public class ContractServiceImpl implements ContractService {
 
         return contract;
     }
+
+    @Override
+    public void deleteContractList(List<Integer> contractIdList) {
+        contractMapper.deleteContractList(contractIdList);
+    }
 }

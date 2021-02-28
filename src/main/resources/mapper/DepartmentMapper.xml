@@ -31,4 +31,11 @@
     <select id="getDepartment" parameterType="int" resultType="department">
         SELECT * FROM department WHERE dept_id =#{deptId}
     </select>
+
+    <delete id="deleteDepartmentList" parameterType="list">
+        DELETE FROM department WHERE dept_id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>
