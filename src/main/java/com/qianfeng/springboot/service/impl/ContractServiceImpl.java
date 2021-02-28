@@ -72,10 +72,28 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public List<Contract> getContractName(String contractName) {
-        List<Contract> contractList = contractMapper.getContractName(contractName);
+    public Page getContractName(Integer pageNo, Integer pageSize,String contractName) {
+        if (pageNo==null){
+            pageNo=1;
+        }
+        if (pageSize==null)
+        {
+            pageSize=4;
+        }
 
-        return contractList;
+        PageHelper.startPage(pageNo,pageSize);
+        List<Contract> contractList = contractMapper.getContractName(contractName);
+        PageInfo<Contract> info = new PageInfo<>(contractList);
+
+        Page page = new Page();
+        page.setHasPre(info.isHasPreviousPage());
+        page.setHasNext(info.isHasNextPage());
+        page.setPageNo(info.getPageNum());
+        page.setPageSize(info.getPageSize());
+        page.setPageCount(info.getPages());
+        page.setData(info.getList());
+
+        return page;
     }
 
     @Override

@@ -70,10 +70,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getEmployeeByName(String empName) {
-        List<Employee> employeeList = employeeMapper.getEmployeeByName(empName);
+    public Page getEmployeeByName(Integer pageNo, Integer pageSize,String empName) {
+        if (pageNo==null){
+            pageNo=1;
+        }
+        if (pageSize==null){
+            pageSize=4;
+        }
 
-        return employeeList;
+        PageHelper.startPage(pageNo,pageSize);
+        List<Employee> employeeList = employeeMapper.getEmployeeByName(empName);
+        PageInfo<Employee> info = new PageInfo<>(employeeList);
+
+        Page page = new Page();
+        page.setHasNext(info.isHasNextPage());
+        page.setHasPre(info.isHasPreviousPage());
+        page.setPageCount(info.getPages());
+        page.setPageNo(info.getPageNum());
+        page.setPageSize(info.getPageSize());
+        page.setData(info.getList());
+
+        return page;
     }
 
     @Override
