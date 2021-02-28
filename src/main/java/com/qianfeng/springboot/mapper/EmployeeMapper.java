@@ -13,7 +13,7 @@ public interface EmployeeMapper {
     void updateEmployee(Employee employee);
     List<Employee> getEmployeeList();
     Employee getEmployee(Integer empId);
-    Employee getEmployeeByName(String empName);
+    List<Employee> getEmployeeByName(String empName);
     Employee getEmployeeByEmail(String email);
     void deleteEmployeeList(List<Integer> empIdList);
 }

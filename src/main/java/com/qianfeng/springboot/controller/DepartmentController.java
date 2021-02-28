@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class DepartmentController {
@@ -79,6 +81,24 @@ public class DepartmentController {
             result = new Result();
             result.setMessage(message);
             Page departmentList = departmentService.getDepartmentList(pageNo, pageSize);
+            result.setData(departmentList);
+        }catch (Exception e){
+            throw new MyException(MyEnum.SELECT_ERROR);
+        }
+        return result;
+    }
+
+
+    //    @RequiresAuthentication
+    @GetMapping("/getDepartmentByName")
+    public Result getDepartmentByName(String deptName){
+        Result result = null;
+        Message message = null;
+        try{
+            message = new Message(MyEnum.OK);
+            result = new Result();
+            result.setMessage(message);
+            List<Department> departmentList = departmentService.getDepartmentByName(deptName);
             result.setData(departmentList);
         }catch (Exception e){
             throw new MyException(MyEnum.SELECT_ERROR);

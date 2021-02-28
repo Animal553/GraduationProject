@@ -141,9 +141,9 @@ public class EmployeeController {
         try {
             result = new Result();
             message = new Message(MyEnum.OK);
-            Employee employee = employeeService.getEmployeeByName(empName);
+            List<Employee> employeeList = employeeService.getEmployeeByName(empName);
             result.setMessage(message);
-            result.setData(employee);
+            result.setData(employeeList);
         }catch (Exception e){
             throw new MyException(MyEnum.SELECT_ERROR);
         }
