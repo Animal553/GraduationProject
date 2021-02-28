@@ -100,16 +100,16 @@ public class ContractController {
 
     //    @RequiresAuthentication
     @GetMapping("/getContractByName")
-    public Result getContractName(Integer pageNo,Integer pageSize,String contractName){
+    public Result getContractName(String contractName){
         Result result = null;
         Message message = null;
 
         try{
             result = new Result();
             message = new Message(MyEnum.OK);
-            Page page = contractService.getContractName(pageNo, pageSize, contractName);
+            List<Contract> contractList = contractService.getContractName(contractName);
             result.setMessage(message);
-            result.setData(page);
+            result.setData(contractList);
         }catch (Exception e){
             throw new MyException(MyEnum.SELECT_ERROR);
         }

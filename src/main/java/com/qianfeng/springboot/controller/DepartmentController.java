@@ -91,15 +91,15 @@ public class DepartmentController {
 
     //    @RequiresAuthentication
     @GetMapping("/getDepartmentByName")
-    public Result getDepartmentByName(Integer pageNo, Integer pageSize,String deptName){
+    public Result getDepartmentByName(String deptName){
         Result result = null;
         Message message = null;
         try{
             message = new Message(MyEnum.OK);
             result = new Result();
             result.setMessage(message);
-            Page page = departmentService.getDepartmentByName(pageNo, pageSize, deptName);
-            result.setData(page);
+            List<Department> departmentList = departmentService.getDepartmentByName(deptName);
+            result.setData(departmentList);
         }catch (Exception e){
             throw new MyException(MyEnum.SELECT_ERROR);
         }

@@ -134,16 +134,16 @@ public class EmployeeController {
     }
 
     @GetMapping("/getEmployeeByName")
-    public Result getEmployeeByName(Integer pageNo, Integer pageSize,String empName){
+    public Result getEmployeeByName(String empName){
         Result result = null;
         Message message = null;
 
         try {
             result = new Result();
             message = new Message(MyEnum.OK);
-            Page page = employeeService.getEmployeeByName(pageNo, pageSize, empName);
+            List<Employee> employeeList = employeeService.getEmployeeByName(empName);
             result.setMessage(message);
-            result.setData(page);
+            result.setData(employeeList);
         }catch (Exception e){
             throw new MyException(MyEnum.SELECT_ERROR);
         }

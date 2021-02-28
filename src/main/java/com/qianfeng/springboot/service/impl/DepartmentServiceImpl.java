@@ -59,27 +59,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Page getDepartmentByName(Integer pageNo, Integer pageSize,String deptName) {
-        if (pageNo==null){
-            pageNo=1;
-        }
-        if (pageSize==null){
-            pageSize=4;
-        }
-
-        PageHelper.startPage(pageNo,pageSize);
+    public List<Department> getDepartmentByName(String deptName) {
         List<Department> departmentList = departmentMapper.getDepartmentByName(deptName);
-
-        PageInfo<Department> info = new PageInfo<>(departmentList);
-        Page page = new Page();
-        page.setHasNext(info.isHasNextPage());
-        page.setHasPre(info.isHasPreviousPage());
-        page.setData(info.getList());
-        page.setPageCount(info.getPages());
-        page.setPageNo(info.getPageNum());
-        page.setPageSize(info.getPageSize());
-
-        return page;
+        return departmentList;
     }
 
     @Override

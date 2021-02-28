@@ -93,16 +93,16 @@ public class ProductController {
 
     //    @RequiresAuthentication
     @GetMapping("/getProductByName")
-    public Result getProductName(Integer pageNo, Integer pageSize,String productName){
+    public Result getProductName(String productName){
         Result result = null;
         Message message = null;
 
         try {
             result = new Result();
             message = new Message(MyEnum.OK);
-            Page page = productService.getProductName(pageNo, pageSize, productName);
+            List<Product> productList = productService.getProductName(productName);
             result.setMessage(message);
-            result.setData(page);
+            result.setData(productList);
         }catch (Exception e){
             throw new MyException(MyEnum.SELECT_ERROR);
         }

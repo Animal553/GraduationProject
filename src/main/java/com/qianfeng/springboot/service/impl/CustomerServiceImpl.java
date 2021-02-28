@@ -84,27 +84,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page getCustomerByName(Integer pageNo, Integer pageSize,String customerName,Integer flg) {
-        if (pageNo==null)
-        {
-            pageNo=1;
-        }
-        if (pageSize==null){
-            pageSize=4;
-        }
-        PageHelper.startPage(pageNo,pageSize);
+    public List<Customer> getCustomerByName(String customerName,Integer flg) {
         List<Customer> customerList = customerMapper.getCustomerByName(customerName,flg);
-        PageInfo<Customer> info = new PageInfo<>(customerList);
-
-        Page page = new Page();
-        page.setHasPre(info.isHasPreviousPage());
-        page.setHasNext(info.isHasNextPage());
-        page.setPageNo(info.getPageNum());
-        page.setPageCount(info.getPages());
-        page.setPageSize(info.getPageSize());
-        page.setData(info.getList());
-
-        return page;
+        return customerList;
     }
 
     @Override

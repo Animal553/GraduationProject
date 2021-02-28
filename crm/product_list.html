@@ -420,7 +420,7 @@
             selectLike:function () {
                 var likeName = $("#likeName").val();
                 that =this
-                $.getJSON('http://192.168.2.248:8080/getProductByName',{"pageNo": this.pageNo,"pageSize": 8,"productName":likeName},function (res) {
+                $.getJSON('http://192.168.2.248:8080/getProductByName',{"productName":likeName},function (res) {
 
                     if (res.message.code==200){
                         that.list = res.data;

@@ -62,27 +62,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page getProductName(Integer pageNo, Integer pageSize,String productName) {
-        if (pageNo==null){
-            pageNo=1;
-        }
-        if (pageSize==null){
-            pageSize=4;
-        }
-
-        PageHelper.startPage(pageNo,pageSize);
+    public List<Product> getProductName(String productName) {
         List<Product> productList = productMapper.getProductName(productName);
-        PageInfo<Product> info = new PageInfo<>(productList);
 
-        Page page = new Page();
-        page.setHasPre(info.isHasPreviousPage());
-        page.setHasNext(info.isHasNextPage());
-        page.setPageSize(info.getPageSize());
-        page.setPageNo(info.getPageNum());
-        page.setPageCount(info.getPages());
-        page.setData(info.getList());
-
-        return page;
+        return productList;
     }
 
     @Override

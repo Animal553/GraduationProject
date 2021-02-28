@@ -135,16 +135,16 @@ public class CustomerController {
 
 
     @GetMapping("/getCustomerByName")
-    public Result getCustomerByName(Integer pageNo, Integer pageSize,String customerName,Integer flg){
+    public Result getCustomerByName(String customerName,Integer flg){
         Result result = null;
         Message message = null;
 
         try{
             result = new Result();
             message = new Message(MyEnum.OK);
-            Page page = customerService.getCustomerByName(pageNo, pageSize, customerName, flg);
+            List<Customer> customerList = customerService.getCustomerByName(customerName,flg);
             result.setMessage(message);
-            result.setData(page);
+            result.setData(customerList);
         }catch (Exception e){
             throw new MyException(MyEnum.SELECT_ERROR);
         }
