@@ -14,6 +14,8 @@
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/vue-router.js"></script>
 </head>
 <!--
     此代码来源于千锋南京Java教学部
@@ -262,7 +264,7 @@
         <!--End 头部信息-->
 
         <!--页面主要内容-->
-        <main class="lyear-layout-content">
+        <main id="rr" class="lyear-layout-content">
 
             <div class="container-fluid">
 
@@ -271,79 +273,82 @@
                     <div class="card-body">
 
                         <form class="form-horizontal" action="#" method="post" onsubmit="return false;">
-                            <input type="hidden"/>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-thread">线索名称</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-thread"
-                                           placeholder="请输入线索名称..">
+                                    <input class="form-control" type="text"
+                                           placeholder="请输入线索名称.." id="customerName" :value="thread">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone">手机</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-phone"
-                                           placeholder="请输入手机号..">
+                                    <input class="form-control" type="text" id="phone"
+                                           placeholder="请输入手机号.." :value="phone">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">负责人</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="chargeId">
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">创建人</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="createId">
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">线索来源</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="sourceId">
+                                        <option v-for="(x,index) of source" :key="index" :value="x.sourceId">{{x.sourceName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">客户行业</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="industryId">
+                                        <option  v-for="(x,index) of industry" :key="index" :value="x.industryId" >{{x.industryId}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">客户级别</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="levelId">
+                                        <option v-for="(x,index) of level" :key="index" :value="x.levelId">{{x.levelName}}</option>
                                     </select>
                                 </div>
                             </div>
-
-
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="example-hf-phone1">创建时间</label>
+                                <div class="col-md-4">
+                                    <input class="form-control " type="date"
+                                           placeholder="yyyy-mm-dd"
+                                           data-date-format="yyyy-mm-dd" id="createTime" :value="createTime"/>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">下次联系时间</label>
                                 <div class="col-md-4">
-                                    <input class="form-control js-datepicker" type="text" data-date-format="yyyy-mm-dd"
-                                           placeholder="年-月-日">
+                                    <input class="form-control " type="date"
+                                           placeholder="yyyy-mm-dd"
+                                           data-date-format="yyyy-mm-dd" id="nextTime" :value="nextTime"/>
+                                    <input value="0" type="text" hidden id="flg"/>
+                                    <input value="1" type="text" hidden id="status"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-9 col-md-offset-3">
-                                    <button class="btn btn-info btn-w-md" type="submit">保存</button>
+                                    <button class="btn btn-info btn-w-md" @click="sub">保存</button>
                                 </div>
                             </div>
                         </form>
@@ -375,41 +380,105 @@
 <script src="js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript">
 
-    $(function () {
-        /* 删除提示框生成 */
-        $('#btnDel').on('click', function () {
+    var a =  location.href
+    console.log(a);
+    var b =a.lastIndexOf("=");
+    var a =a.toString().substring(b+1)
+    a = parseInt(a)
+    console.log(a)
+    new Vue({
+        el:"#rr",
+        data:{
+            thread:'',
+            phone:'',
+            level:[],
+            industry:[],
+            source:[],
+            employee:[],
+            level1:'',
+            industry1:'',
+            source1:'',
+            employee1:'',
+            createTime:'',
+            nextTime: ''
+        },
+        watch:{
 
+        },
+        methods:{
+            sub:function () {
+                var customerName = $("#customerName").val();
+                var phone = $("#phone").val();
+                var chargeId = $("#chargeId").val();
+                var createId = $("#createId").val();
+                var sourceId = $("#sourceId").val();
+                var industryId = $("#industryId").val();
+                var levelId = $("#levelId").val();
+                var createTime = $("#createTime").val();
+                var nextTime = $("#nextTime").val();
+                var flg = $("#flg").val();
+                var status = $("#status").val();
 
-            //获取被选中的多选框
-            var cks = $("input[type='checkbox']:checked").not($("#check-all"));
-            for (var i = 0; i < cks.length; i++) {
-                console.log(cks[i].value);
+                console.log(levelId)
+                $.post('http://192.168.2.248:8080/updateCustomer',{"customerName":customerName,"phone":phone,"chargeId":chargeId,"createId":createId,"sourceId":sourceId,"industryId":industryId,"levelId":levelId,"createTime":createTime,"nextTime":nextTime,"flg":flg,"status":status},function (res) {
+                    if (res.message.code==200){
+                        window.location.href="thread_list.html";
+                    }else {
+                        alert(res.message.message);
+                    }
+
+                })
             }
 
-            $.confirm({
-                title: '删除',
-                content: '是否确认删除?',
-                type: 'red',
-                typeAnimated: true,
-                buttons: {
-                    tryAgain: {
-                        text: '确认',
-                        btnClass: 'btn-red',
-                        action: function () {
-                            //当点击确认删除时被执行
-                            console.log('确认删除....');
+        },
+        mounted:function () {
+            that = this
+            $.getJSON('http://192.168.2.248:8080/getCustomer',{"customerId":a},function (res) {
+                console.log(res)
+                if (res.message.code==200){
+                    that.thread = res.data.customerName;
+                    that.phone = res.data.phone;
+                    that.level1 = res.data.levelId;
+                    that.industry1 = res.data.industryId;
+                    that.source1 = res.data.sourceId;
+                    that.createTime = res.data.createTime;
+                    that.nextTime = res.data.nextTime;
 
-                        }
-                    },
-                    close: {
-                        text: '关闭'
-                    }
+                }else {
+                    alert(res.message.message);
                 }
-            });
-        });
 
-
-    });
+            })
+            $.getJSON('http://192.168.2.248:8080/getLevelList',function (res) {
+                if (res.message.code==200){
+                    that.level = res.data;
+                }else {
+                    alert(res.message.message);
+                }
+            }),
+                $.getJSON('http://192.168.2.248:8080/getIndustryList',function (res) {
+                    if (res.message.code==200){
+                        that.industry = res.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                }),
+                $.getJSON('http://192.168.2.248:8080/getSourceList',function (res) {
+                    if (res.message.code==200){
+                        that.source = res.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            $.getJSON('http://192.168.2.248:8080/getEmployeeList',{"pageSize":100000},function (res) {
+                if (res.message.code==200){
+                    that.employee = res.data.data;
+                }else {
+                    alert(res.message.message);
+                }
+            })
+        }
+    })
 
 </script>
 </body>

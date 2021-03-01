@@ -1,5 +1,7 @@
 package com.qianfeng.springboot.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Customer {
@@ -12,8 +14,11 @@ public class Customer {
     private Integer sourceId;
     private Integer industryId;
     private Integer levelId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date nextTime;
     private Integer flg;
     private Employee chargeName;

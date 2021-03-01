@@ -15,6 +15,7 @@
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
     <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/vue-router.js"></script>
 </head>
 <!--
     此代码来源于千锋南京Java教学部
@@ -329,7 +330,10 @@
                                             <td>{{x.nextTime}}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="thread_update.html" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
+<!--                                                    href="thread_update.html"-->
+<!--                                                    <router-link :to="{name:'home', query: {id:1}}">-->
+<!--                                                    @click="updateButton(x.customerId)"-->
+                                                    <a class="btn btn-xs btn-default" @click="updateButton(x.customerId)" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
                                                     <a class="btn btn-xs btn-default" @click="deleteButton(x.customerId)" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
                                                 </div>
                                             </td>
@@ -377,13 +381,16 @@
             pageCount:1,
         },
         methods:{
+            updateButton:function(customerId){
+                window.location.href="thread_update.html?customerId="+customerId;
+            },
             deleteButton:function (customerId) {
                 $.getJSON('http://192.168.2.248:8080/deleteCustomer',{"customerId":customerId},function (res) {
 
                     // console.log(res.message.code);
                     //console.log(res.data.data.data);
                     if (res.message.code==200){
-                        window.location.href="thread_list.html";
+                        window.location.href="customer_list.html";
                     }else {
                         alert(res.message.message);
                     }
