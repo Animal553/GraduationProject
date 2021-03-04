@@ -1,6 +1,5 @@
 package com.qianfeng.springboot.job;
 
-import com.qianfeng.springboot.entity.Customer;
 import com.qianfeng.springboot.service.CustomerService;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
