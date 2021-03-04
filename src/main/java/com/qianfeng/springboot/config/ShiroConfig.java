@@ -57,7 +57,7 @@ public class ShiroConfig {
 //
 //        cookie.setHttpOnly(true);
 //        cookie.setMaxAge(259200);
-//
+//        cookie.setValue("qianfeng");
 //        return cookie;
 //    }
 //
@@ -72,7 +72,7 @@ public class ShiroConfig {
 //        cookieRememberMeManager.setCookie(createCookie);
 //        return cookieRememberMeManager;
 //    }
-//
+
     @Bean
     public ShiroFilterFactoryBean createShiroFilterFactoryBean(SecurityManager securityManager){
 
