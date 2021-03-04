@@ -18,11 +18,15 @@ public class QuartzConfig {
     }
 
 
+    /**
+     * 创建触发器
+     * @return
+     */
     @Bean
     public Trigger createTrigger(){
 
-        //0/1 * * * * ?
-        //59 59 23 * * ?
+        //0/1 * * * * ? 没过一秒
+        //59 59 23 * * ? 每天凌晨
         CronScheduleBuilder cronScheduleBuilder =CronScheduleBuilder.cronSchedule("59 59 23 * * ?");//定时任务的设置
         return TriggerBuilder.newTrigger()//创建新的调度器的对象
                 .forJob(createJobDetail())//绑定jobDetail

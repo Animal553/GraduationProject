@@ -32,6 +32,15 @@ public class ShiroConfig {
         return webSecurityManager;
     }
 
+    //设置shiro的会话时间
+//    @Bean
+//    public DefaultSessionManager createDefaultWebSessionManager(){
+//        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+//        defaultWebSessionManager.setSessionIdCookie(null);
+//
+//        return defaultWebSessionManager;
+//    }
+
     @Bean
     public ShiroFilterFactoryBean createShiroFilterFactoryBean(SecurityManager securityManager){
 
