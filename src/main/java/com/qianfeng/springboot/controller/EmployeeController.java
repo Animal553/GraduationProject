@@ -156,7 +156,7 @@ public class EmployeeController {
         UsernamePasswordToken token = new UsernamePasswordToken(email,password);
         Result result = null;
         Message message = null;
-        //记住我，前端传来的rem不是空就是记住我，否则就是不是记住我
+        //记住我，前端传来的rem不是空就是记住我，否则就是 不是记住我
         if (rem!=null){
             token.setRememberMe(true);
         }else {

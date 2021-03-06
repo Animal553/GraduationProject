@@ -323,7 +323,7 @@
 
                                             <td>{{x.customerName}}</td>
                                             <td>{{x.phone}}</td>
-                                            <td>{{x.status==1?'已签约':未签约}}</td>
+                                            <td>{{x.status==1?'已签约':'未签约'}}</td>
                                             <td>{{x.chargeName.empName}}</td>
                                             <td>{{x.createName.empName}}</td>
                                             <td>{{x.source.sourceName}}</td>
@@ -334,7 +334,7 @@
                                             <td>{{x.nextTime}}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="customer_update.html" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
+                                                    <a class="btn btn-xs btn-default" @click="updateButton(x.customerId)" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
                                                     <a class="btn btn-xs btn-default" @click="deleteButton(x.customerId)" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
                                                 </div>
                                             </td>
@@ -382,6 +382,10 @@
             pageCount:1,
         },
         methods:{
+
+            updateButton:function(customerId){
+                window.location.href="customer_update.html?customerId="+customerId;
+            },
             deleteButton:function (customerId) {
                 $.getJSON('http://192.168.2.248:8080/deleteCustomer',{"customerId":customerId},function (res) {
 

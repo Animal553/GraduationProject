@@ -291,6 +291,7 @@
                                 <label class="col-md-3 control-label" for="example-hf-phone1">负责人</label>
                                 <div class="col-md-4">
                                     <select class="form-control" id="chargeId">
+                                        <option :value="employee11" >{{employee1}}(原负责人)</option>
                                         <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
@@ -299,6 +300,7 @@
                                 <label class="col-md-3 control-label" for="example-hf-phone1">创建人</label>
                                 <div class="col-md-4">
                                     <select class="form-control" id="createId">
+                                        <option :value="employee22" >{{employee2}}(原创建人)</option>
                                         <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
@@ -307,6 +309,7 @@
                                 <label class="col-md-3 control-label" for="example-hf-phone1">线索来源</label>
                                 <div class="col-md-4">
                                     <select class="form-control" id="sourceId">
+                                        <option :value="source1" >{{source2}}(原来源)</option>
                                         <option v-for="(x,index) of source" :key="index" :value="x.sourceId">{{x.sourceName}}</option>
                                     </select>
                                 </div>
@@ -315,7 +318,8 @@
                                 <label class="col-md-3 control-label" for="example-hf-phone1">客户行业</label>
                                 <div class="col-md-4">
                                     <select class="form-control" id="industryId">
-                                        <option  v-for="(x,index) of industry" :key="index" :value="x.industryId" >{{x.industryId}}</option>
+                                        <option :value="industry1" >{{industry2}}(原行业)</option>
+                                        <option  v-for="(x,index) of industry" :key="index" :value="x.industryId" >{{x.industryName}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -323,6 +327,7 @@
                                 <label class="col-md-3 control-label" for="example-hf-phone1">客户级别</label>
                                 <div class="col-md-4">
                                     <select class="form-control" id="levelId">
+                                        <option :value="level1" >{{level2}}(原级别)</option>
                                         <option v-for="(x,index) of level" :key="index" :value="x.levelId">{{x.levelName}}</option>
                                     </select>
                                 </div>
@@ -396,9 +401,15 @@
             source:[],
             employee:[],
             level1:'',
+            level2:'',
             industry1:'',
+            industry2:'',
             source1:'',
+            source2:'',
             employee1:'',
+            employee11:'',
+            employee2:'',
+            employee22:'',
             createTime:'',
             nextTime: ''
         },
@@ -420,7 +431,7 @@
                 var status = $("#status").val();
 
                 console.log(levelId)
-                $.post('http://192.168.2.248:8080/updateCustomer',{"customerName":customerName,"phone":phone,"chargeId":chargeId,"createId":createId,"sourceId":sourceId,"industryId":industryId,"levelId":levelId,"createTime":createTime,"nextTime":nextTime,"flg":flg,"status":status},function (res) {
+                $.post('http://192.168.2.248:8080/updateCustomer',{"customerId":a,"customerName":customerName,"phone":phone,"chargeId":chargeId,"createId":createId,"sourceId":sourceId,"industryId":industryId,"levelId":levelId,"createTime":createTime,"nextTime":nextTime,"flg":flg,"status":status},function (res) {
                     if (res.message.code==200){
                         window.location.href="thread_list.html";
                     }else {
@@ -439,10 +450,17 @@
                     that.thread = res.data.customerName;
                     that.phone = res.data.phone;
                     that.level1 = res.data.levelId;
+                    that.level2 = res.data.level.levelName;
                     that.industry1 = res.data.industryId;
+                    that.industry2 = res.data.industry.industryName;
                     that.source1 = res.data.sourceId;
+                    that.source2 = res.data.source.sourceName;
                     that.createTime = res.data.createTime;
                     that.nextTime = res.data.nextTime;
+                    that.employee1 = res.data.chargeName.empName;
+                    that.employee11 = res.data.chargeName.empId;
+                    that.employee2 = res.data.createName.empName;
+                    that.employee22 = res.data.chargeName.empId;
 
                 }else {
                     alert(res.message.message);

@@ -14,6 +14,7 @@
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+    <script type="text/javascript" src="js/vue.js"></script>
 </head>
 <!--
     此代码来源于千锋南京Java教学部
@@ -270,98 +271,102 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <form class="form-horizontal" action="lyear_forms_elements.html" method="post"
+
+
+                        <form id="rr" class="form-horizontal"
                               onsubmit="return false;">
-                            <!-- 更新客户ID-->
-                            <input type="hidden" value="10001"/>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-thread">客户名称</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-thread"
-                                           placeholder="请输入客户名称..">
+                                    <input class="form-control" type="text"
+                                           placeholder="请输入客户名称.." id="customerName" :value="thread">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone">手机</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-phone"
+                                    <input class="form-control" type="text" id="phone" :value="phone"
                                            placeholder="请输入手机号..">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">负责人</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="chargeId">
+                                        <option :value="employee11" >{{employee1}}(原负责人)</option>
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">创建人</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="createId">
+                                        <option :value="employee22" >{{employee2}}(原创建人)</option>
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">客户来源</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="sourceId">
+                                        <option :value="source1" >{{employee2}}(原来源)</option>
+                                        <option v-for="(x,index) of source" :key="index" :value="x.sourceId">{{x.sourceName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">客户行业</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="industryId">
+                                        <option :value="industry1" >{{industry2}}(原行业)</option>
+                                        <option v-for="(x,index) of industry" :key="index" :value="x.industryId">{{x.industryName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">客户级别</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="levelId">
+                                        <option :value="level1" >{{level2}}(原级别)</option>
+                                        <option v-for="(x,index) of level" :key="index" :value="x.levelId">{{x.levelName}}</option>
                                     </select>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">更新时间</label>
                                 <div class="col-md-4">
-                                    <input class="form-control js-datetimepicker" type="date"/>
+                                    <input class="form-control " type="date"
+                                           placeholder="yyyy-mm-dd"
+                                           data-date-format="yyyy-mm-dd" id="updateTime" :value="updateTime"/>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">下次联系时间</label>
                                 <div class="col-md-4">
-                                    <input class="form-control js-datetimepicker" type="date"/>
+                                    <input class="form-control " type="date"
+                                           placeholder="yyyy-mm-dd"
+                                           data-date-format="yyyy-mm-dd" id="nextTime" :value="nextTime"/>
+                                    <input value="1" type="text" hidden id="flg"/>
                                 </div>
                             </div>
-                            <!-- 单选框-->
+
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">成交状态</label>
                                 <div class="col-md-4">
                                     <label class="lyear-radio radio-inline radio-primary">
-                                        <input checked="checked" type="radio" name="e"><span>已成交</span>
+                                        <input type="radio" name="status" value="1" checked="checked"><span>已成交</span>
                                     </label>
                                     <label class="lyear-radio radio-inline radio-primary">
-                                        <input type="radio" name="e"><span>未成交</span>
+                                        <input type="radio" name="status" value="0"><span>未成交</span>
                                     </label>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-md-9 col-md-offset-3">
-                                    <button class="btn btn-info btn-w-md" type="submit">保存</button>
+                                    <button class="btn btn-info btn-w-md" @click="sub">保存</button>
                                 </div>
                             </div>
                         </form>
@@ -391,5 +396,120 @@
 <!--图表插件-->
 <script type="text/javascript" src="js/Chart.js"></script>
 <script src="js/jconfirm/jquery-confirm.min.js"></script>
+
+<script type="text/javascript">
+
+    var a =  location.href
+    console.log(a);
+    var b =a.lastIndexOf("=");
+    var a =a.toString().substring(b+1)
+    a = parseInt(a)
+    console.log(a)
+    new Vue({
+        el:"#rr",
+        data:{
+            thread:'',
+            phone:'',
+            level:[],
+            industry:[],
+            source:[],
+            employee:[],
+            level1:'',
+            level2:'',
+            industry1:'',
+            industry2:'',
+            source1:'',
+            source2:'',
+            employee1:'',
+            employee11:'',
+            employee2:'',
+            employee22:'',
+            updateTime:'',
+            nextTime: ''
+        },
+        watch:{
+
+        },
+        methods:{
+            sub:function () {
+                var customerName = $("#customerName").val();
+                var phone = $("#phone").val();
+                var chargeId = $("#chargeId").val();
+                var createId = $("#createId").val();
+                var sourceId = $("#sourceId").val();
+                var industryId = $("#industryId").val();
+                var levelId = $("#levelId").val();
+                var updateTime = $("#updateTime").val();
+                var nextTime = $("#nextTime").val();
+                var flg = $("#flg").val();
+                var status = $("input[name='status']:checked").val();
+
+                $.post('http://192.168.2.248:8080/updateCustomer',{"customerId":a,"customerName":customerName,"phone":phone,"chargeId":chargeId,"createId":createId,"sourceId":sourceId,"industryId":industryId,"levelId":levelId,"updateTime":updateTime,"nextTime":nextTime,"flg":flg,"status":status},function (res) {
+                    if (res.message.code==200){
+                        window.location.href="customer_list.html";
+                    }else {
+                        alert(res.message.message);
+                    }
+
+                })
+            }
+
+        },
+        mounted:function () {
+            that = this
+            $.getJSON('http://192.168.2.248:8080/getCustomer',{"customerId":a},function (res) {
+                console.log(res)
+                if (res.message.code==200){
+                    that.thread = res.data.customerName;
+                    that.phone = res.data.phone;
+                    that.level1 = res.data.levelId;
+                    that.level2 = res.data.level.levelName;
+                    that.industry1 = res.data.industryId;
+                    that.industry2 = res.data.industry.industryName;
+                    that.source1 = res.data.sourceId;
+                    that.source2 = res.data.source.sourceName;
+                    that.updateTime = res.data.updateTime;
+                    that.nextTime = res.data.nextTime;
+                    that.employee1 = res.data.chargeName.empName;
+                    that.employee11 = res.data.chargeName.empId;
+                    that.employee2 = res.data.createName.empName;
+                    that.employee22 = res.data.chargeName.empId;
+                }else {
+                    alert(res.message.message);
+                }
+
+            })
+            $.getJSON('http://192.168.2.248:8080/getLevelList',function (res) {
+                if (res.message.code==200){
+                    that.level = res.data;
+                }else {
+                    alert(res.message.message);
+                }
+            }),
+                $.getJSON('http://192.168.2.248:8080/getIndustryList',function (res) {
+                    if (res.message.code==200){
+                        that.industry = res.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                }),
+                $.getJSON('http://192.168.2.248:8080/getSourceList',function (res) {
+                    if (res.message.code==200){
+                        that.source = res.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                })
+            $.getJSON('http://192.168.2.248:8080/getEmployeeList',{"pageSize":100000},function (res) {
+                if (res.message.code==200){
+                    that.employee = res.data.data;
+                }else {
+                    alert(res.message.message);
+                }
+            })
+        }
+    })
+
+</script>
 </body>
 </html>
