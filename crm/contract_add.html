@@ -14,6 +14,7 @@
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+    <script type="text/javascript" src="js/vue.js"></script>
 </head>
 <!-- 
 	此代码来源于千锋南京Java教学部
@@ -272,71 +273,67 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <form id="showProductId" class="form-horizontal" enctype="multipart/form-data"
+                        <form id="rr" class="form-horizontal" enctype="multipart/form-data"
                               action="lyear_forms_elements.html" method="post" onsubmit="return false;">
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-thread">合同名称</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-thread"
+                                    <input class="form-control" type="text" id="contractName"
                                            placeholder="请输入合同名称..">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone">合同金额</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-phone"
+                                    <input class="form-control" type="text" id="contractPrice"
                                            placeholder="请输入合同金额..">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone">客户签约人</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-phone"
+                                    <input class="form-control" type="text" id="customerSign"
                                            placeholder="请输入客户签约人..">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">公司签约人</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="companySignId">
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">客户名称</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="customerId">
+                                        <option v-for="(x,index) of customer" :key="index" :value="x.customerId">{{x.customerName}}</option>
                                     </select>
                                 </div>
+
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">负责人</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="chargeId">
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">审批人1</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="approval1Id">
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">审批人2</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="approval2Id">
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -344,16 +341,18 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">生效时间</label>
                                 <div class="col-md-4">
-                                    <input class="form-control js-datepicker" type="text" data-date-format="yyyy-mm-dd"
-                                           placeholder="年-月-日">
+                                    <input class="form-control " type="date"
+                                           placeholder="yyyy-mm-dd"
+                                           data-date-format="yyyy-mm-dd" id="startTime"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">结束时间</label>
                                 <div class="col-md-4">
-                                    <input class="form-control js-datepicker" type="text" data-date-format="yyyy-mm-dd"
-                                           placeholder="年-月-日">
+                                    <input class="form-control " type="date"
+                                           placeholder="yyyy-mm-dd"
+                                           data-date-format="yyyy-mm-dd" id="endTime"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -374,10 +373,9 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">合同产品</label>
                                 <div class="col-md-4">
-                                    <div class="col-md-4" style="padding-left: 0px;">
-                                        <select class="form-control" id="productEleId">
-                                            <option value="2001">小米8青春版</option>
-                                            <option value="3001">小米CC9E青春版</option>
+                                    <div class="col-md-4">
+                                        <select class="form-control" id="productId">
+                                            <option v-for="(x,index) of product" :key="index" :value="x.productId">{{x.productName}}</option>
                                         </select>
                                     </div>
                                     <input class="form-control" id="productEleCount"
@@ -422,74 +420,66 @@
 <script src="js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript">
 
-    //删除已添加标签
-    var lcs = $(".labelClass");
-    for (var i = 0; i < lcs.length; i++) {
-        $(lcs[i]).click(function () {
-            //删除展示标签
-            $(this.parentNode).remove();
-            //删除form表单中的隐藏input数据
-            //获取ID
-            var pid = this.parentNode.id;
-            console.log(pid)
-            var cccc = $("#showProductId input[class=" + pid + "]:hidden");
-            cccc.remove();
-        });
-    }
-    //根据按钮添加标签
-    $("#productBtn").click(function () {
+    new Vue({
+        el:"#rr",
+        data:{
+            employee:[],
+            customer:[],
+            product:[]
+        },
+        methods:{
+            sub:function () {
+                var customerName = $("#customerName").val();
+                var phone = $("#phone").val();
+                var chargeId = $("#chargeId").val();
+                var createId = $("#createId").val();
+                var sourceId = $("#sourceId").val();
+                var industryId = $("#industryId").val();
+                var levelId = $("#levelId").val();
+                var createTime = $("#createTime").val();
+                var nextTime = $("#nextTime").val();
+                var flg = $("#flg").val();
+                var status = $("input[name='status']:checked").val();
 
-        //获取选中参数
-        var count = $("#productEleCount").val();//获取数量
-        var productId = $("#productEleId option:selected").val(); //获取下拉框选中的参数
-        var productName = $("#productEleId option:selected").html();//获取名称
-        //拼接参数
-        var productInfo = productId + "=" + count;
-        console.log(productInfo);
-        console.log(productName);
-        //拼接样式,并将其展示到指定位置
+                $.post('http://192.168.2.248:8080/addCustomer',{"customerName":customerName,"phone":phone,"chargeId":chargeId,"createId":createId,"sourceId":sourceId,"industryId":industryId,"levelId":levelId,"createTime":createTime,"nextTime":nextTime,"flg":flg,"status":status},function (res) {
+                    if (res.message.code==200){
+                        window.location.href="customer_list.html";
+                    }else {
+                        alert(res.message.message);
+                    }
 
-        var span1 = $("<span></span>");
-        //设置类名
-        span1.addClass("label label-primary");
-        //设置属性值
-        span1.attr("id", "p" + productId);
-        span1.attr("style", "margin-right: 0.1875rem;");
-        //创建子节点
-        var pNEle = $("<span>" + productName + " " + count + "台</span>");
+                })
+            }
+        },
+        computed:{
 
-        var pNEle2 = ("<span class=\"labelClass\" style=\"padding-left: 0.25rem; padding-right: 0.25rem;cursor: pointer;font-weight: bold;\">x</span>")
-
-        //子节点设置到父节点中
-        span1.append(pNEle);
-        span1.append(pNEle2);
-
-        $("#showLabel").append(span1);
-
-        //获取表单元素
-        var spEle = $("#showProductId");
-        //添加input控件
-        //创建input控件
-        var pInfo = $("<input type=\"hidden\" class=p" + productId + " value=" + productInfo + " name=\"productInfo\" />");
-        //添加到form表单中,设置类型为隐藏
-        spEle.prepend(pInfo);
-        console.log(spEle[0]);
-        //重新绑定事件
-
-        var lcs = $(".labelClass");
-        for (var i = 0; i < lcs.length; i++) {
-            $(lcs[i]).click(function () {
-                //删除展示标签
-                $(this.parentNode).remove();
-                //删除form表单中的隐藏input数据
-                //获取ID
-                var pid = this.parentNode.id;
-                console.log(pid)
-                var cccc = $("#showProductId input[class=" + pid + "]:hidden");
-                cccc.remove();
-            });
+        },
+        mounted:function () {
+            that = this
+            $.getJSON('http://192.168.2.248:8080/getEmployeeList',{"pageSize":100000},function (res) {
+                if (res.message.code==200){
+                    that.employee = res.data.data;
+                }else {
+                    alert(res.message.message);
+                }
+            }),
+            $.getJSON('http://192.168.2.248:8080/getCustomerList',{"pageSize":100000},function (res) {
+                if (res.message.code==200){
+                    that.customer = res.data.data;
+                }else {
+                    alert(res.message.message);
+                }
+            })
+            $.getJSON('http://192.168.2.248:8080/getProductList',{"pageSize":100000},function (res) {
+                if (res.message.code==200){
+                    that.product = res.data.data;
+                }else {
+                    alert(res.message.message);
+                }
+            })
         }
-    });
+
+    })
 
 </script>
 </body>
