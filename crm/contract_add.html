@@ -481,6 +481,68 @@
 
     })
 
+
+    var lcs = $(".labelClass");
+    for(var i=0;i<lcs.length;i++){
+        $(lcs[i]).click(function(){
+            //删除展示标签
+            $(this.parentNode).remove();
+            //删除form表单中的隐藏input数据
+            //获取ID
+            var pid = this.parentNode.id;
+            console.log(pid)
+            var cccc = $("#showProductId input[class="+pid+"]:hidden");
+            cccc.remove();
+        });
+    }
+    //根据按钮添加标签
+    $("#productBtn").click(function(){
+        //获取选中参数
+        var count = $("#productEleCount").val();//获取数量
+        var productId = $("#productEleId option:selected").val(); //获取下拉框选中的参数
+        var productName = $("#productEleId option:selected").html();//获取名称
+        //拼接参数
+        var productInfo = productId+"="+count;
+        console.log(productInfo);
+        console.log(productName);
+        //拼接样式,并将其展示到指定位置
+        var span1 = $("<span></span>");
+        //设置类名
+        span1.addClass("label label-primary");
+        //设置属性值
+        span1.attr("id","p"+productId);
+        span1.attr("style","margin-right: 0.1875rem;");
+        //创建子节点
+        var pNEle = $("<span>"+productName+" "+count+"台</span>");
+        var pNEle2 = ("<span class=\"labelClass\" style=\"padding-left: 0.25rem; padding-right: 0.25rem;cursor: pointer;font-weight: bold;\">x</span>")
+        //子节点设置到父节点中
+        span1.append(pNEle);
+        span1.append(pNEle2);
+        $("#showLabel").append(span1);
+        //获取表单元素
+        var spEle = $("#showProductId");
+        //添加input控件
+        //创建input控件
+        var pInfo = $("<input type=\"hidden\" class=p"+productId+" value="+productInfo+" name=\"productInfo\" />");
+        //添加到form表单中,设置类型为隐藏
+        spEle.prepend(pInfo);
+        console.log(spEle[0]);
+        //重新绑定事件
+        var lcs = $(".labelClass");
+        for(var i=0;i<lcs.length;i++){
+            $(lcs[i]).click(function(){
+                //删除展示标签
+                $(this.parentNode).remove();
+                //删除form表单中的隐藏input数据
+                //获取ID
+                var pid = this.parentNode.id;
+                console.log(pid)
+                var cccc = $("#showProductId input[class="+pid+"]:hidden");
+                cccc.remove();
+            });
+        }
+    });
+
 </script>
 </body>
 </html>
