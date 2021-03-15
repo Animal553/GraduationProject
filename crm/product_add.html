@@ -14,6 +14,7 @@
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+    <script type="text/javascript" src="js/vue.js"></script>
 </head>
 <!--
     此代码来源于千锋南京Java教学部
@@ -270,61 +271,59 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <form class="form-horizontal" action="#" method="post" onsubmit="return false;">
+                        <form id="rr" class="form-horizontal" action="#" method="post" onsubmit="return false;">
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-thread">产品名称</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-thread"
+                                    <input class="form-control" type="text" id="productName"
                                            placeholder="请输入产品名称..">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone">价格</label>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="text" id="example-hf-phone" placeholder="请输入价格..">
+                                    <input class="form-control" type="text" id="price" placeholder="请输入价格..">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">创建人</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>张三</option>
-                                        <option>李四</option>
+                                    <select class="form-control" id="createId">
+                                        <option v-for="(x,index) of employee" :key="index" :value="x.empId">{{x.empName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">分类</label>
                                 <div class="col-md-4">
-                                    <select class="form-control">
-                                        <option>手机</option>
-                                        <option>电脑</option>
+                                    <select class="form-control" id="categoryId">
+                                        <option v-for="(x,index) of category" :key="index" :value="x.categoryId">{{x.categoryName}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">创建时间</label>
                                 <div class="col-md-4">
-                                    <input class="form-control js-datepicker m-b-10" type="text" id="example-datepicker"
-                                           value="2010-12-12" placeholder="yyyy-mm-dd" value=""
-                                           data-date-format="yyyy-mm-dd"/>
+                                    <input class="form-control " type="date"
+                                           placeholder="yyyy-mm-dd"
+                                           data-date-format="yyyy-mm-dd" id="createTime"/>
+                                    <input value="1" type="text" hidden id="flg"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="example-hf-phone1">是否上架</label>
                                 <div class="col-md-4">
-                                    <!-- 是否上下架-->
                                     <label class="lyear-radio radio-inline radio-primary">
-                                        <input type="radio" name="status" checked><span>是</span>
+                                        <input type="radio" name="status" value="1" checked="checked"><span>是</span>
                                     </label>
                                     <label class="lyear-radio radio-inline radio-primary">
-                                        <input type="radio" name="status"><span>否</span>
+                                        <input type="radio" name="status" value="0"><span>否</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-9 col-md-offset-3">
-                                    <button class="btn btn-info btn-w-md" type="submit">保存</button>
+                                    <button class="btn btn-info btn-w-md" type="submit" @click="sub">保存</button>
                                 </div>
                             </div>
                         </form>
@@ -354,6 +353,59 @@
 <!--图表插件-->
 <script type="text/javascript" src="js/Chart.js"></script>
 <script src="js/jconfirm/jquery-confirm.min.js"></script>
+
+<script type="text/javascript">
+
+    new Vue({
+        el:"#rr",
+        data:{
+            category:[],
+            employee:[]
+
+        },
+        methods:{
+            sub:function () {
+                var productName = $("#productName").val();
+                var categoryId = $("#categoryId").val();
+                var price = $("#price").val();
+                var createId = $("#createId").val();
+                var createTime = $("#createTime").val();
+                var status = $("input[name='status']:checked").val();
+
+                $.post('http://192.168.2.248:8080/addProduct',{"productName":productName,"categoryId":categoryId,"price":price,"createId":createId,"createTime":createTime,"status":status},function (res) {
+                    console.log(res)
+                    if (res.message.code==200){
+                        window.location.href="product_list.html";
+                    }else {
+                        alert(res.message.message);
+                    }
+
+                })
+            }
+        },
+        computed:{
+
+        },
+        mounted:function () {
+            that = this
+                $.getJSON('http://192.168.2.248:8080/getCategoryList',function (res) {
+                    if (res.message.code==200){
+                        that.category = res.data;
+                    }else {
+                        alert(res.message.message);
+                    }
+                }),
+            $.getJSON('http://192.168.2.248:8080/getEmployeeList',{"pageSize":100000},function (res) {
+                if (res.message.code==200){
+                    that.employee = res.data.data;
+                }else {
+                    alert(res.message.message);
+                }
+            })
+        }
+
+    })
+</script>
 
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.qianfeng.springboot.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -11,7 +13,9 @@ public class Product {
     private Integer categoryId;
     private double price;
     private Integer createId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
     private Integer status;//上下架，0上架，1下架
     private Category category;
